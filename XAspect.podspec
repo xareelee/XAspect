@@ -7,10 +7,9 @@ Pod::Spec.new do |s|
   s.authors      = { 'Kang-Yu Xaree Lee' => 'xareelee@gmail.com' }
   # s.source       = { :git => "https://github.com/xareelee/XAspect.git", :tag => s.version.to_s }
   
-  s.requires_arc = true
-  s.platform     = :ios, '6.0'
-  
-  s.default_subspecs = 'Core', 'Macros'
+  s.requires_arc = false  
+  s.ios.deployment_target = '5.0'
+  s.osx.deployment_target = '10.7'
 
   s.public_header_files = 'XAspect/*.h'
   s.source_files = 'XAspect/*.{h,m}'
@@ -20,6 +19,8 @@ Pod::Spec.new do |s|
        'CLANG_CXX_LANGUAGE_STANDARD' => 'c++11',
        'CLANG_CXX_LIBRARY' => 'libc++'
   }
+
+  s.default_subspecs = 'Core', 'Macros'
 
   s.subspec 'Core' do |ss|
     ss.source_files = 'XAspect/Core/*.{h,m,mm,c,cpp}'
