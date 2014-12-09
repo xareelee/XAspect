@@ -139,9 +139,9 @@ Using safe category in XAspect is simple — just like what you did in Obj-C cat
 
 // After loading, instance of NSObject will respond to `-doSomething`.
 - (void)doSomething
-	{
+{
 	// Implement your category patch here.
-	}
+}
 
 @end
 #undef AtAspectOfClass
@@ -161,7 +161,7 @@ Safe category methods are private, and can be used directly in the same patch fi
 ```objc
 // Use the aspect name as the category name.
 @interface NSObject (AnAspectName)
-- (void)doSomething
+- (void)doSomething;
 @end
 ```
 	
@@ -176,7 +176,7 @@ XAspect provides two solutions for this situation. One is **nucleus patch** (rec
 
 
 <p align="center">
-  <img src="Images/Prime_Source_Implementation.png" style="width:200px;"/>
+  <img src="Images/Prime_Source_Implementation.png" style="width:100px;"/>
 </p>
 
 XAspect will try finding and injecting the proper nucleus patch implementation if needed. You can synthesize either *default* or *supercaller* nucleus patch by macro `@synthesizeNucleusPatch()`. For example, 
