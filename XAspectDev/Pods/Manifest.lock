@@ -1,0 +1,29 @@
+PODS:
+  - CocoaLumberjack (2.0.0-beta2):
+    - CocoaLumberjack/CLI (= 2.0.0-beta2)
+    - CocoaLumberjack/Core (= 2.0.0-beta2)
+    - CocoaLumberjack/Extensions (= 2.0.0-beta2)
+  - CocoaLumberjack/CLI (2.0.0-beta2):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Core (2.0.0-beta2)
+  - CocoaLumberjack/Extensions (2.0.0-beta2):
+    - CocoaLumberjack/Core
+  - XAspect (1.0.0):
+    - XAspect/Core (= 1.0.0)
+    - XAspect/Macros (= 1.0.0)
+  - XAspect/Core (1.0.0)
+  - XAspect/Macros (1.0.0)
+
+DEPENDENCIES:
+  - CocoaLumberjack (= 2.0.0-beta2)
+  - XAspect (from `./../`)
+
+EXTERNAL SOURCES:
+  XAspect:
+    :path: ./../
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: 956d3fb98fed498a13d56499f262c975ef431c98
+  XAspect: ff48dc8bff15577de01cba454c5cd7effd47a6c6
+
+COCOAPODS: 0.35.0

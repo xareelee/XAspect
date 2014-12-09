@@ -1,0 +1,1 @@
+../../../../../XAspect/Core/XAInjectionTemplate.h

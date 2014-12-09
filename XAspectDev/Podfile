@@ -1,0 +1,10 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '6.0'
+
+pod 'XAspect', :path => './../'
+pod 'CocoaLumberjack', '2.0.0-beta2'
+
+
+target :XAspectDevTests do
+ pod 'XAspect', :path => './../'
+end
