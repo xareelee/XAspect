@@ -35,30 +35,34 @@ You could use XAspect to try this by yourself either:
 
  2. Install XAspect in your project and add the following code in a new *.m* file.
 
-		// In an aspect file you create (.m file).
-		#import <Foundation/Foundation.h>
-		#import <XAspect/XAspect.h>
-		
-		// A aspect namespace for the aspect implementation field (mandatory).
-		#define AtAspect ObjectLifetime 
 
-		// Create an aspect patch field for the class you want to add the aspect patches to.
-		#define AtAspectOfClass NSObject
-		@classPatchField(NSObject)
+```objc
+// In an aspect file you create (.m file).
+#import <Foundation/Foundation.h>
+#import <XAspect/XAspect.h>
 
-		// Intercept the target objc message.
-		AspectPatch(-, instancetype, init)
-		{
-			// Add your custom implementation here.
-			NSLog(@"[Init]: %@", NSStringFromClass([self class]));
-			
-			// Forward the message to the source implementation.
-			return XAMessageForward(init);
-		}
+// A aspect namespace for the aspect implementation field (mandatory).
+#define AtAspect ObjectLifetime 
 
-		@end
-		#undef AtAspectOfClass
-		#undef AtAspect
+// Create an aspect patch field for the class you want to add the aspect patches to.
+#define AtAspectOfClass NSObject
+@classPatchField(NSObject)
+
+// Intercept the target objc message.
+AspectPatch(-, instancetype, init)
+{
+	// Add your custom implementation here.
+	NSLog(@"[Init]: %@", NSStringFromClass([self class]));
+	
+	// Forward the message to the source implementation.
+	return XAMessageForward(init);
+}
+
+@end
+#undef AtAspectOfClass
+#undef AtAspect
+```
+
 
 
 Run the program. After the program is loaded, you'll see messages when any object is initialized:
@@ -125,14 +129,14 @@ XAspect is available under the MIT license. See the [LICENSE] file for more info
 
 
 <!--File Links-->
-[Introduction]: Documents/Introduction_of_XAspect.md
+[Introduction]: Documents/Introduction_of_XAspect.md#introduction-of-xaspect
 [Getting Started]: Documents/Getting_Started_using_XAspect.md
 [XAspect Inside]: Documents/XAspect_Inside.md
 [Documentation]: Documents/Documentation.md#documentation
-[Downsides and Restrictions]: Documents/Documentation.md#Downsides-and-Restrictions
+[Downsides and Restrictions]: Documents/Documentation.md#downsides-and-restrictions
 [Development Notes]: Documents/DevelopmentNotes.md
 [LICENSE]: LICENSE.md
-[XAspect Templates]: d
+
 
 <!--Links-->
 [Aspect-Oriented Programming]: http://en.wikipedia.org/wiki/Aspect-oriented_programming

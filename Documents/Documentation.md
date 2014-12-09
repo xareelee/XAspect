@@ -177,6 +177,7 @@ XAspect provides two solutions for this situation. One is **nucleus patch** (rec
 
 <img src="Images/Prime_Source_Implementation.png" width="407px" height="565px"/>
 
+
 XAspect will try finding and injecting the proper nucleus patch implementation if needed. You can synthesize either *default* or *supercaller* nucleus patch by macro `@synthesizeNucleusPatch()`. For example, 
 
 ```objc

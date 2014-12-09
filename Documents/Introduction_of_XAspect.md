@@ -1,16 +1,15 @@
 Introduction of XAspect
 =======================
 
-[**XAspect**] is one sub-project of my another project [**XSpect**] in 2013. After one year, I decide to release this improved version of XAspect independently.
+**[XAspect]** is one sub-project of my another project **[XSpect]** in 2013. After one year, I decide to release this improved version of XAspect independently.
 
 In this article, we'll demonstrate what XAspect aims for and how to use XAspect:
 
- - [What is XAspect: the Aims of XAspect]
-	* [Decouple Implementation Dependency]
-	* [Encapsulate One Cross-Cutting Concern in One File]
-
- - [How to Use XAspect: Getting Started]
- 	* [Basics of XAspect]
+ - [What is XAspect: the Aims of XAspect](#what-is-xaspect-the-aims-of-xaspect-)
+	* [Decouple Implementation Dependency](#decouple-implementation-dependency)
+	* [Encapsulate One Cross-Cutting Concern in One File](#encapsulate-one-cross-cutting-concern-in-one-file)
+ - [How to Use XAspect: Getting Started](#how-to-use-xaspect-getting-started)
+ 	* [Basics of XAspect](#basics-of-xaspect)
 
 You can find other articles here:
 
@@ -27,127 +26,143 @@ XAspect decouples independent logic code from the target methods, encapsulate th
 
 For example, with XAspect, you can configure many libraries outside of `-application:didFinishLaunchingWithOptions:`. It keeps the source implementation clean and keeps [open-closed principle][OCP].
 
-![](Images/XAspect_illustration.png)
+
+<img src="Images/XAspect_illustration.png" width="670px" height="409px"/>
+
 
 
 The following is likely what you do in your `-application:didFinishLaunchingWithOptions:` implementation without XAspect:
 
-	// AppDelegate.m
-	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+```objc
+// AppDelegate.m
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions 
+{
+	// (1) Initializing GoogleAnalytics library
+	// Optional: automatically send uncaught exceptions to Google Analytics.
+	[GAI sharedInstance].trackUncaughtExceptions = YES;
+
+	// Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+	[GAI sharedInstance].dispatchInterval = 20;
+
+	// Optional: set Logger to VERBOSE for debug information.
+	[[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+
+	// Initialize tracker. Replace with your tracking ID.
+	[[GAI sharedInstance] trackerWithTrackingId:@"UA-XXXX-Y"];
+
+
+	// (2) Configure library A
+	NSLog(@"Configure library A");
+		...
+		
+	// (3) Configure library B
+	NSLog(@"Configure library B");
+		...
 	
-		// (1) Initializing GoogleAnalytics library
-		// Optional: automatically send uncaught exceptions to Google Analytics.
-		[GAI sharedInstance].trackUncaughtExceptions = YES;
-
-		// Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-		[GAI sharedInstance].dispatchInterval = 20;
-
-		// Optional: set Logger to VERBOSE for debug information.
-		[[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
-
-		// Initialize tracker. Replace with your tracking ID.
-		[[GAI sharedInstance] trackerWithTrackingId:@"UA-XXXX-Y"];
-
-
-		// (2) Configure library A
-		NSLog(@"Configure library A");
-		...
-			
-		// (3) Configure library B
-		NSLog(@"Configure library B");
-		...
-		
-		// Other Configuration...
-		
-		return YES;
-	}
+	// Other Configuration...
+	
+	return YES;
+}
+```
 
 
 As time goes by, the implementation of `-application:didFinishLaunchingWithOptions:` will become bigger and more complex.
 
 With XAspect, you'll implement `-application:didFinishLaunchingWithOptions:` like this:
 
-	// AppDelegate.m
-	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-		return YES;
-	}
+
+```objc
+// AppDelegate.m
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	return YES;
+}
+```
 
 
 Yes, you just need to focus on the main responsibility of `-application:didFinishLaunchingWithOptions:` — return `YES` or `NO`. We'll  implement the independent aspects in different places.
 
 Implement aspect ***GoogleAnalytics*** in *Aspect-GoogleAnalytics.m*:
 
-	// Aspect-GoogleAnalytics.m
-	#import "AppDelegate.h"
-	#import <XAspect/XAspect.h>
 
-	// Define an aspect field for GoogleAnalytics
-	#define AtAspect GoogleAnalytics 
+```objc
+// Aspect-GoogleAnalytics.m
+#import "AppDelegate.h"
+#import <XAspect/XAspect.h>
 
-	#define AtAspectOfClass AppDelegate
-	@classPatchField(AppDelegate)
-	AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions)
-	{
-		 // Optional: automatically send uncaught exceptions to Google Analytics.
-		[GAI sharedInstance].trackUncaughtExceptions = YES;
+// Define an aspect field for GoogleAnalytics
+#define AtAspect GoogleAnalytics 
 
-		// Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-		[GAI sharedInstance].dispatchInterval = 20;
+#define AtAspectOfClass AppDelegate
+@classPatchField(AppDelegate)
+AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions)
+{
+	 // Optional: automatically send uncaught exceptions to Google Analytics.
+	[GAI sharedInstance].trackUncaughtExceptions = YES;
 
-		// Optional: set Logger to VERBOSE for debug information.
-		[[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+	// Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+	[GAI sharedInstance].dispatchInterval = 20;
 
-		// Initialize tracker. Replace with your tracking ID.
-		[[GAI sharedInstance] trackerWithTrackingId:@"UA-XXXX-Y"];
-		
-		return XAspectForwardMessageToOrigin(application:application didFinishLaunchingWithOptions:launchOptions);
-	}
-	@end
-	#undef AtAspectOfClass
-	#undef AtAspect
+	// Optional: set Logger to VERBOSE for debug information.
+	[[[GAI sharedInstance] logger] setLogLevel:kGAILogLevelVerbose];
+
+	// Initialize tracker. Replace with your tracking ID.
+	[[GAI sharedInstance] trackerWithTrackingId:@"UA-XXXX-Y"];
+	
+	return XAspectForwardMessageToOrigin(application:application didFinishLaunchingWithOptions:launchOptions);
+}
+@end
+#undef AtAspectOfClass
+#undef AtAspect
+```
 
 
 Implement aspect ***LibraryA*** in *Aspect-LibraryA.m*:
 
-	// Aspect-LibraryA.m
-	#import "AppDelegate.h"
-	#import <XAspect/XAspect.h>
-	
-	// Define an aspect field for Library A
-	#define AtAspect LibraryA
-	
-	#define AtAspectOfClass AppDelegate
-	@classPatchField(AppDelegate)
-	AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) 
-	{
-		// Configure Library A here		
-		NSLog(@"Configure library A");
-	}
-	@end
-	#undef AtAspectOfClass
-	#undef AtAspect
+
+```objc
+// Aspect-LibraryA.m
+#import "AppDelegate.h"
+#import <XAspect/XAspect.h>
+
+// Define an aspect field for Library A
+#define AtAspect LibraryA
+
+#define AtAspectOfClass AppDelegate
+@classPatchField(AppDelegate)
+AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) 
+{
+	// Configure Library A here		
+	NSLog(@"Configure library A");
+}
+@end
+#undef AtAspectOfClass
+#undef AtAspect
+```
 	
 
 Implement aspect ***LibraryB*** in *Aspect-LibraryB.m*:
 
 
-	// Aspect-LibraryB.m	
-	#import "AppDelegate.h"
-	#import <XAspect/XAspect.h>
-	
-	// Define an aspect field for Library B
-	#define AtAspect LibraryB
-	
-	#define AtAspectOfClass AppDelegate
-	@classPatchField(AppDelegate)
-	AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions)
-	 {		
-		// Configure Library B here		
-		NSLog(@"Configure library B");
-	}
-	@end
-	#undef AtAspectOfClass
-	#undef AtAspect
+```objc
+// Aspect-LibraryB.m	
+#import "AppDelegate.h"
+#import <XAspect/XAspect.h>
+
+// Define an aspect field for Library B
+#define AtAspect LibraryB
+
+#define AtAspectOfClass AppDelegate
+@classPatchField(AppDelegate)
+AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions)
+{		
+	// Configure Library B here		
+	NSLog(@"Configure library B");
+}
+@end
+#undef AtAspectOfClass
+#undef AtAspect
+```
 
 
 XAspect will weave those **aspect patches** into `-application:didFinishLaunchingWithOptions:` when the program finishes loading. The results are equivalent to what you did without XAspect.
@@ -169,79 +184,77 @@ The following sample code demonstrates how to achieve this goal. You can try eit
  * Add the following code in a .m file in your project (You might need to change the class `AppDelegate` in the demo code to yours in your project):
 
 
-		// In Aspect-CocoaLumberjack.m
-		#import "AppDelegate.h"
-		#import <XAspect/XAspect.h>
-		
-		// =============================================================================
-		#define AtAspect CocoaLumberjack
-		// =============================================================================
+```objc
+// In Aspect-CocoaLumberjack.m
+#import "AppDelegate.h"
+#import <XAspect/XAspect.h>
 
-		/**
-		 CocoaLumberjack
-		 
-		 @version 2.0.0-beta2
-		 @see https://github.com/CocoaLumberjack/CocoaLumberjack
-		 */
+// =============================================================================
+#define AtAspect CocoaLumberjack
+// =============================================================================
+/**
+ CocoaLumberjack
+ 
+ @version 2.0.0-beta2
+ @see https://github.com/CocoaLumberjack/CocoaLumberjack
+ */
 
-		// We define the keyword `LOG_LEVEL_DEF` before importing CocoaLumberjack. We
-		// use this macro to indicate the level in this aspect file.
-		#ifdef DEBUG
-			#define LOG_LEVEL_DEF LOG_LEVEL_VERBOSE
-		#else
-			#define LOG_LEVEL_DEF LOG_LEVEL_WARN
-		#endif
+// We define the keyword `LOG_LEVEL_DEF` before importing CocoaLumberjack. We
+// use this macro to indicate the level in this aspect file.
+#ifdef DEBUG
+	#define LOG_LEVEL_DEF LOG_LEVEL_VERBOSE
+#else
+	#define LOG_LEVEL_DEF LOG_LEVEL_WARN
+#endif
 
-		#import <CocoaLumberjack/CocoaLumberjack.h>
-		// -----------------------------------------------------------------------------
+#import <CocoaLumberjack/CocoaLumberjack.h>
+// -----------------------------------------------------------------------------
 
+#define AtAspectOfClass AppDelegate
+@classPatchField(AppDelegate)
 
-		#define AtAspectOfClass AppDelegate
-		@classPatchField(AppDelegate)
-		
-		@tryCustomizeDefaultPatch(1, -, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions){
-			return YES;
-		}
+@tryCustomizeDefaultPatch(1, -, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions){
+	return YES;
+}
 
-		AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) {
+AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) 
+{
+	[DDLog addLogger:[DDASLLogger sharedInstance]]; // sends log statements to Apple System Logger, so they show up on Console.app
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];	// sends log statements to Xcode console - if available
+	
+	DDLogInfo(@"CocoaLumberjack's Loggers have been configured when application did finish launching.");
+	
+	return XAMessageForward(application:(UIApplication *)application
+							didFinishLaunchingWithOptions:(NSDictionary *)launchOptions);
+}
 
-			[DDLog addLogger:[DDASLLogger sharedInstance]]; // sends log statements to Apple System Logger, so they show up on Console.app
-			[DDLog addLogger:[DDTTYLogger sharedInstance]];	// sends log statements to Xcode console - if available
-			
-			DDLogInfo(@"CocoaLumberjack's Loggers have been configured when application did finish launching.");
-			
-			return XAMessageForward(application:(UIApplication *)application
-									didFinishLaunchingWithOptions:(NSDictionary *)launchOptions);
-		}
+@end
+#undef AtAspectOfClass 
 
-		@end
-		#undef AtAspectOfClass 
+// -----------------------------------------------------------------------------
 
-		// -----------------------------------------------------------------------------
+#define AtAspectOfClass UIViewController
+@classPatchField(UIViewController)
 
+@synthesizeNucleusPatch(Default, -, void, viewDidLoad);
+@synthesizeNucleusPatch(Default, -, void, viewDidAppear:(BOOL)animated);
 
-		#define AtAspectOfClass UIViewController
-		@classPatchField(UIViewController)
+AspectPatch(-, void, viewDidLoad) 
+{
+	DDLogInfo(@"[CocoaLumberjack Log]: %@'s view did load.", NSStringFromClass([self class]));
+	return XAMessageForward(viewDidLoad);
+}
 
-		@synthesizeNucleusPatch(Default, -, void, viewDidLoad);
-		@synthesizeNucleusPatch(Default, -, void, viewDidAppear:(BOOL)animated);
+AspectPatch(-, void, viewDidAppear:(BOOL)animated) 
+{	
+	DDLogInfo(@"[CocoaLumberjack Log]: %@'s view did appear.", NSStringFromClass([self class]));
+	return XAMessageForward(viewDidAppear:(BOOL)animated);
+}
 
-		AspectPatch(-, void, viewDidLoad){
-			
-			DDLogInfo(@"[CocoaLumberjack Log]: %@'s view did load.", NSStringFromClass([self class]));
-			
-			return XAMessageForward(viewDidLoad);
-		}
+@end
+#undef AtAspectOfClass
+```
 
-		AspectPatch(-, void, viewDidAppear:(BOOL)animated){
-			
-			DDLogInfo(@"[CocoaLumberjack Log]: %@'s view did appear.", NSStringFromClass([self class]));
-			
-			return XAMessageForward(viewDidAppear:(BOOL)animated);
-		}
-
-		@end
-		#undef AtAspectOfClass
 
 
 After running the program, You'll see the messages in the Xcode console:
@@ -277,43 +290,46 @@ XAspect uses lots of C macros to create class patch fields for implementing your
 
 The following is a simple example:
 
-	#import <UIKit/UIKit.h>
-	#import <XAspect/XAspect.h>
-	
-	#define AtAspect SpecificAspectNamespace  // 1
 
-	#define AtAspectOfClass UIButton  // 2
-	@classPatchField(UIButton)  // 2
-	
-	@synthesizeNucleusPatch(SuperCaller, -, instancetype, initWithFrame:(CGRect)frame); // 3
+```objc
+#import <UIKit/UIKit.h>
+#import <XAspect/XAspect.h>
 
-	AspectPatch(-, instancetype, initWithFrame:(CGRect)frame) // 4
-	{  
-		
-		// 5. before advice
-		
-		UIButton *view = XAMessageForward(initWithFrame:frame); // 6
-		
-		// 7. after advice
-		
-		return (UIButton *)view; // 8
-	}
+#define AtAspect SpecificAspectNamespace  // 1
+
+#define AtAspectOfClass UIButton  // 2
+@classPatchField(UIButton)  // 2
+
+@synthesizeNucleusPatch(SuperCaller, -, instancetype, initWithFrame:(CGRect)frame); // 3
+
+AspectPatch(-, instancetype, initWithFrame:(CGRect)frame) // 4
+{  
 	
-	- (void)safeCategoryMethod {  // 9
-		
-	}
+	// 5. before advice
 	
-	@end  // Close `@classPatchField()` field
-	#undef AtAspectOfClass
+	UIButton *view = XAMessageForward(initWithFrame:frame); // 6
 	
-	#undef AtAspect
+	// 7. after advice
+	
+	return (UIButton *)view; // 8
+}
+
+- (void)safeCategoryMethod {  // 9
+	
+}
+
+@end  // Close `@classPatchField()` field
+#undef AtAspectOfClass
+
+#undef AtAspect
+```
 
 
  1. **Define an aspect namespace**: Use `#define AtAspect <#AspectName#>` ... `#undef AtAspect` to create a namespace. XAspect macros will take the defined `AtAspect` in current context to synthesize unique identifiers for recognition. **The definition of `AtAspect` is mandatory**.
 
  2. **Create a class patch field for the target class**: Within an *aspect namespace*, use `@classPatchField()` ... `@end` to create a class patch field for implementing your patches of the target class. It's like Obj-C `@implementation` ... `@end` field. You also need to define the macro keyword `AtAspectOfClass` just above the `@classPatchField()` and the class name should match. Other XAspect macros will use both `AtAspect` and `AtAspectOfClass`.
 
- 3. **Synthesize the nucleus if needed**: XAspect uses method swizzling to make the *selector chain*. The source implementation must exist before method swizzling. The macro `@synthesizeNucleusPatch()` will synthesize the implementation for you if the target class doesn't have its own source implementation. For more details, see ['Nucleus Patch'] section in the documentation.
+ 3. **Synthesize the nucleus if needed**: XAspect uses method swizzling to make the *selector chain*. The source implementation must exist before method swizzling. The macro `@synthesizeNucleusPatch()` will synthesize the implementation for you if the target class doesn't have its own source implementation. For more details, see ['Nucleus Patch'][Nucleus Patch] section in the documentation.
 
  4. **Declare an aspect patch for a target method**: Within the *aspect patch field*, use `AspectPatch()` macro to synthesize the aspect method signature for your aspect implementation. 
 
