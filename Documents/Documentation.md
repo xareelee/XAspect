@@ -175,9 +175,7 @@ To solve this, you need to add an implementation to the class before method swiz
 XAspect provides two solutions for this situation. One is **nucleus patch** (recommended); the other one is **safe category**. The following figure demonstrates how XAspect primes the source implementation.
 
 
-<p align="center">
-  <img src="Images/Prime_Source_Implementation.png" width="200px" height="280px"/>
-</p>
+<img src="Images/Prime_Source_Implementation.png" width="407px" height="565px"/>
 
 XAspect will try finding and injecting the proper nucleus patch implementation if needed. You can synthesize either *default* or *supercaller* nucleus patch by macro `@synthesizeNucleusPatch()`. For example, 
 
