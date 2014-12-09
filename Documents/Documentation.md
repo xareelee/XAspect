@@ -3,14 +3,14 @@ Documentation
 
 Be sure you've already read the [introduction] before this article.
 
- - [Aspect Field and Patch Field]
- 	* [Aspect Namespace and Class Patch Field]
- 	* [Aspect Encapsulation Conventions and Aspect File]
- - [Patches]
-	* [Aspect Patch]
-	* [Safe Category Patch]
-	* [Nucleus Patch]
- - [Downsides and Restrictions] 
+ - [Aspect Field and Patch Field](#aspect-field-and-patch-field)
+ 	* [Aspect Namespace and Class Patch Field](#aspect-namespace-and-class-patch-field)
+ 	* [Aspect Encapsulation Conventions and Aspect File](#aspect-encapsulation-conventions-and-aspect-file)
+ - [Patches](#patches)
+	* [Aspect Patch](#aspect-patch)
+	* [Safe Category Patch](#safe-category-patch)
+	* [Nucleus Patch](#nucleus-patch)
+ - [Downsides and Restrictions](#downsides-and-restrictions)
 
 
 Aspect Field and Patch Field
@@ -21,15 +21,22 @@ Aspect Field and Patch Field
 
 An aspect field is a namespace to implement patches for the aspect. You create an aspect field by defining the macro keyword `AtAspect`:
 
-	#define AtAspect <#SpecificAspectName#>
+```objc
+#define AtAspect <#SpecificAspectName#>
+```
+
 
 
 XAspect macros use this defined keyword to synthesize many specific name. After this definition, you can start to create the class patch field:
 
-	#define AtAspectOfClass NSObject  // Define macro keyword for the target class
-	@classPatchField(NSObject)  // Create an implementation field for the target class
-	// Implement patches here.
-	@end
+```objc
+#define AtAspectOfClass NSObject  // Define macro keyword for the target class
+@classPatchField(NSObject)  // Create an implementation field for the target class
+
+// Implement patches here.
+
+@end
+```
 
 
 Macro `@classPatchField()` will create an implementation field just like `@implementation` does. Before `@classPatchField()`, you should also define a macro keyword `AtAspectOfClass`, and it should match the target class in the `@classPatchField()`.
@@ -40,8 +47,10 @@ You can create as many class patch fields in the same aspect namespace as possib
 
 Between different `AtAspect` or `AtAspectOfClass`, you should undefine those keyword first:
 
-	#undef AtAspect
-	#undef AtAspectOfClass
+```objc
+#undef AtAspect
+#undef AtAspectOfClass
+```
 
 
 If you create more than one class patch field with `@classPatchField()` which share the same aspect namespace (`AtAspect`) and the same target class (`AtAspectOfClass`), the compiler will raise a duplicated symbol error.
@@ -58,7 +67,7 @@ Here are the conventions and tips for encapsulation:
 
  - Create a **.m** file for one aspect (or **.mm** for Objective-C++). Usually, you don't need a **.h** file to expose the interface.
 
- - Name the file as **'Aspect-{AspectNamespace}**. The prefix **'Aspect-'** indicates this file is an aspect patch file for the specific aspect.
+ - Name the file as **'Aspect-<#AspectNamespace#>'**. The prefix **'Aspect-'** indicates this file is an aspect patch file for the specific aspect.
 
  - One aspect file should contain only one aspect; one aspect should be encapsulated in only one file.
 
@@ -74,36 +83,41 @@ Patches
 
 In the patch field, you could implement the following patches:
 
- - [Aspect Patch]
- - [Safe Category Patch]
- - [Nucleus Patch]: synthesize nuclei for aspect patches
-
+ - [Aspect Patch](#aspect-patch)
+ - [Safe Category Patch](#safe-category-patch)
+ - [Nucleus Patch](#nucleus-patch)
 
 ### Aspect Patch
 
 
 Using aspect patches is easy. You use `AspectPatch()` macro to prefix the selector name for XAspect detecting. For example
 
-	AspectPatch(-, void, viewDidLoad)
-	{
-		// Implement your aspect patch here.
-	}
+```objc
+AspectPatch(-, void, viewDidLoad)
+{
+	// Implement your aspect patch here.
+}
+```
 	
 
 In fact, XAspect will intercept the Obj-C message for your aspect patch by method swizzling. Usually, you'll need to forward the message to the source implementation by invoke `XAMessageForward()` with the method body and parameters.  You can add your logic code **before** and/or **after** invoke `XAMessageForward()`. These logic code is called [advice][advice]. You also need to return a value for the return type.
 
 For example:
 
-	AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) 
-	{
-		// Before advice
-		
-		BOOL retVal = XAMessageForward(application:(UIApplication *)application
-									   didFinishLaunchingWithOptions:(NSDictionary *)launchOptions);
-		// After advice
-		
-		return 	retVal;
-	}
+
+```objc
+AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) 
+{
+	// Before advice
+	
+	BOOL retVal = XAMessageForward(application:(UIApplication *)application
+								   didFinishLaunchingWithOptions:(NSDictionary *)launchOptions);
+	// After advice
+	
+	return 	retVal;
+}
+
+```
 
 
 A method could be patched by different aspect patches, and it will form a **selector chain**.
@@ -117,19 +131,22 @@ Safe category is technique derived from [libextobjc] to avoid to overwriting the
 
 Using safe category in XAspect is simple — just like what you did in Obj-C category or libextobjc safe category:
 
-	#define AtAspect AnAspectName
-	#define AtAspectOfClass NSObject
-	@classForAspect(NSObject)
 
-	// After loading, instance of NSObject will respond to `-doSomething`.
-	- (void)doSomething
+```objc
+#define AtAspect AnAspectName
+#define AtAspectOfClass NSObject
+@classForAspect(NSObject)
+
+// After loading, instance of NSObject will respond to `-doSomething`.
+- (void)doSomething
 	{
-		// Implement your category patch here.
+	// Implement your category patch here.
 	}
 
-	@end
-	#undef AtAspectOfClass
-	#undef AtAspect
+@end
+#undef AtAspectOfClass
+#undef AtAspect
+```
 
 If you're using [libextobjc] already, you'd better move those safe category methods to XAspect patch field to let XAspect control the injection sequence. 
 
@@ -140,10 +157,13 @@ You can invoke a safe category method in an aspect patch implementation if they 
 
 Safe category methods are private, and can be used directly in the same patch field. If you want to use the safe category outside of the class patch field, you need to provide the interface. Just simply use Obj-C category to expose the interface:
 
-	// Use the aspect name as the category name.
-	@interface NSObject (AnAspectName)
-	- (void)doSomething
-	@end
+
+```objc
+// Use the aspect name as the category name.
+@interface NSObject (AnAspectName)
+- (void)doSomething
+@end
+```
 	
 
 ### Nucleus Patch 
@@ -155,14 +175,16 @@ To solve this, you need to add an implementation to the class before method swiz
 XAspect provides two solutions for this situation. One is **nucleus patch** (recommended); the other one is **safe category**. The following figure demonstrates how XAspect primes the source implementation.
 
 
-<img src="Images/Prime_Source_Implementation.png" alt="Drawing" style="width: 350px;"/>
-
-
+<p align="center">
+  <img src="Images/Prime_Source_Implementation.png" style="width:200px;"/>
+</p>
 
 XAspect will try finding and injecting the proper nucleus patch implementation if needed. You can synthesize either *default* or *supercaller* nucleus patch by macro `@synthesizeNucleusPatch()`. For example, 
 
-	@synthesizeNucleusPatch(Default, -, void, doSomething);
-	@synthesizeNucleusPatch(SuperCaller, -, void, viewDidLoad);
+```objc
+@synthesizeNucleusPatch(Default, -, void, doSomething);
+@synthesizeNucleusPatch(SuperCaller, -, void, viewDidLoad);
+```
 
  * **Default nucleus patch**: If the class itself and its superclasses don't respond to the selector, XAspect will try to find and use the default nucleus patch. A default nucleus patch is an implementation which will do nothing and return a null/zero value for the return type. 
  * **Supercaller nucleus patch**: If a superclass does respond to the selector but the class doesn't have its own implementation, XAspect will try to find and use the super-caller nucleus patch. A super-caller nucleus patch is an implementation which will simply invoke the superclass's implementation and return that value.
@@ -178,9 +200,12 @@ If you want to change the return value from the default implementation, you can 
 
 For example, you might want to synthesize a default implementation which will return `YES` for `-application:didFinishLaunchingWithOptions:` if it's not implemented in the project, you can implement like this:
 
-	@tryCustomizeDefaultPatch(1, -, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) {
-		return YES;
-	}
+```objc
+@tryCustomizeDefaultPatch(1, -, BOOL, application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions) {
+	return YES;
+}
+```
+
 
 `@tryCustomizeDefaultPatch()` takes one more parameter, **priority**, to compete the default nucleus patch. You can synthesize multiple customized default nucleus patches in different class patch fields. XAspect will choose the implementation with highest priority for the nucleation. By the way, the `priority` is an `unsign long` value, and nucleus patches synthesized by `@synthesizeNucleusPatch()` have the priority of `0`.
 
@@ -191,9 +216,13 @@ For example, you might want to synthesize a default implementation which will re
 
 You rarely need to change the behavior or the return value of a super-caller nucleus patch. But if you want, you can use `@tryCustomizeSupercallerPatch()` to achieve this.
 
-	@tryCustomizeSupercallerPatch(1, -, void, viewDidLoad) {
-		XAMessageForwardSuper(viewDidLoad); // invoke superclass's implementation.
-	}
+
+```objc
+@tryCustomizeSupercallerPatch(1, -, void, viewDidLoad) {
+	XAMessageForwardSuper(viewDidLoad); // invoke superclass's implementation.
+}
+```
+
 
 In any patches, you should not use the keyword `super` to invoke the superclass's implementation in a class patch field. Always use `XAMessageForwardSuper()` instead, and you should only use `XAMessageForwardSuper()` in `@tryCustomizeSupercallerPatch()`.
 
