@@ -57,7 +57,7 @@ If you create more than one class patch field with `@classPatchField()` which sh
 
 We recommend that you only create each aspect namespace only once. Patches for the same aspect should be encapsulated in one aspect namespace. We'll discuss how to encapsulate your aspect in one file.
 
-> **Warning: Don't use Obj-C keyword `super` in any XAspect patch. The keyword `super` in patch field equals to the keyword `self`. You should use the macro `XAMessageForwardSuper()` instead. Please the section [Downsides and Restrictions].** 
+> **Warning: Don't use Obj-C keyword `super` in any XAspect patch. The keyword `super` in patch field equals to the keyword `self`. You should use the macro `XAMessageForwardSuper()` instead. Please the section [Downsides and Restrictions](#downsides-and-restrictions).** 
 
 
 

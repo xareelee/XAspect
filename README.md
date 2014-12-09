@@ -4,7 +4,7 @@ XAspect is an Objective-C framework for [Aspect-Oriented Programming] to make yo
 
 It provides macros and APIs for **binding your aspect implementation to the target Objective-C methods whether you have the source implementation or not, even the Apple's SDK!**
 
-XAspect decouples the aspect logic (or [cross-cutting concerns]) from your project and encapsulates those aspects into separated aspect files. Once the program is loaded, XAspect will automatically merge those patches into your program by [**method swizzling**].
+XAspect decouples the aspect logic (or [cross-cutting concerns]) from your project and encapsulates those aspects into separated aspect files. Once the program is loaded, XAspect will automatically merge those patches into your program by [**method swizzling**][method swizzling].
 
 > If you've already known what XAspect is, you could skip the following sections and jump to the [table of contents (the section 'More Information')](#more_information).
 
@@ -83,7 +83,7 @@ For more information about XAspect, please read the [introduction][Introduction]
 
 Using XAspect has some benefits:
  
- * **Change behaviors without changing the source.** XAspect lets you decouple your aspect implementation ([*cross-cutting concern*]) from classes and source files. This means that it keeps [Open/Closed Principle (OCP)][OCP] when you need to modify the aspect features/behaviors in your project. 
+ * **Change behaviors without changing the source.** XAspect lets you decouple your aspect implementation ([*cross-cutting concern*][cross-cutting concern]) from classes and source files. This means that it keeps [Open/Closed Principle (OCP)][OCP] when you need to modify the aspect features/behaviors in your project. 
  * **Encapsulate your aspect implementation in one file.** XAspect lets you implement your aspect implementation patches in one file. You just need to focus in one file to do aspect-oriented programming across the whole project. This means that your aspect code is more *maintainable* and *reusable*. You can simply reuse them by copying the aspect files into another project with a little modification if needed.
  * **Easier for version control.** Because of the encapsulation, changes from one aspect are encapsulated in one files, you can commit your aspect patches in one file. It means that you don't need to branch your source while you're developing multiple aspects through multiple classes and files. 
  * **Avoid to replace the original implementation by Safe Category.** XAspect also implement the *Safe Category* feature derived from [libextobjc]. With Safe Category, it guarantees that your category implementation will be the only one implementation for the target selector — it won't replace or be replaced by other implementations. If there are more than one implementation for the same target selector, XAspect will identify the conflict when the program is loaded. 
