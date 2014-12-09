@@ -72,7 +72,7 @@ Run the program. After the program is loaded, you'll see messages when any objec
 
 XAspect aims to separate aspect code from the source implementation, and inject them back when the program is loaded.
 
-For more information about XAspect, please read the [introduction][Introduction] and the [documentation][Detailed Documentation].
+For more information about XAspect, please read the [introduction][Introduction] and the [documentation][Documentation].
 
 
 ### Benefits using XAspect
@@ -96,7 +96,7 @@ Using XAspect has some benefits:
 
 ### Downsides and Restrictions
 
-There are some downsides and restrictions. Please read the section ['Downsides and Restrictions'] in Documentation.
+There are some downsides and restrictions. Please read the section ['Downsides and Restrictions'][Downsides and Restrictions] in Documentation.
 
 
 ## More Information
@@ -104,7 +104,7 @@ There are some downsides and restrictions. Please read the section ['Downsides a
  1. [Introduction]
 	* What is XAspect: the Aims of XAspect
 	* How to Use XAspect: Getting Started
- 2. [Detailed Documentation]
+ 2. [Documentation]
 	* Aspect Field and Patch Field
 	* Patches
 	* Downsides and Restrictions
@@ -128,7 +128,7 @@ XAspect is available under the MIT license. See the [LICENSE] file for more info
 [Introduction]: Documents/Introduction_of_XAspect.md
 [Getting Started]: Documents/Getting_Started_using_XAspect.md
 [XAspect Inside]: Documents/XAspect_Inside.md
-[Detailed Documentation]: Documents/Documentation.md
+[Documentation]: Documents/Documentation.md#documentation
 [Downsides and Restrictions]: Documents/Documentation.md#Downsides-and-Restrictions
 [Development Notes]: Documents/DevelopmentNotes.md
 [LICENSE]: LICENSE.md

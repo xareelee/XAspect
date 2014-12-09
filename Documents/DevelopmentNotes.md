@@ -3,8 +3,8 @@ Development Notes
 
 This document contains the following sections:
 
-* [Bugs and Known Issues]
-* [TODO List]
+* [Bugs and Known Issues](#bugs-and-known-issues)
+* [TODO List](#todo-list)
 
 Bugs and Known Issues
 ---------------------
@@ -54,19 +54,19 @@ Sorted by target version.
 
 **@someday**
 
- - Use `@XAspect(AspectName) ... @endXAspect` statement instead of `#define AtXAspect AspectName ... #undef AtXAspect` to create an aspect field.
+ - Use `@XAspect(AspectName) ... @endXAspect` statement instead of `#define AtAspect AspectName ... #undef AtAspect` to create an aspect field.
 
 	* Currently, I don't find a way to do that. You can't use a C macro to define another C macro with C99:
 
 
 			// The following macros don't work.
-			#define XAspect(AspectName) class NSObject; #define AtXAspect AspectName
-			#define endXAspect class NSObject; #undef AtXAspect
+			#define XAspect(AspectName) class NSObject; #define AtAspect AspectName
+			#define endXAspect class NSObject; #undef AtAspect
 
  - Refactor (method rename) problem: Xcode will crash.
- - Ensure user did invoke `XAReinvokeSource()` or `XASilenceForwarding()` when using free style 
-		* Raising compiler error, not just warning.
-		* Check when weaving (just loaded), not invoking time.
+ - Ensure user did invoke `XAMessageForward()`
+	* Raising compiler error, not just warning.
+	* Check when weaving (just loaded), not invoking time.
 
   - Auto-synthesize null and super caller implementation in `AspectPatch()`.
 	* We can use C++ template to generate the null return value implementation.
