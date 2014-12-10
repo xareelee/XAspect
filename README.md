@@ -29,11 +29,11 @@ Using XAspect is a little like writing **patches** or **plugins** for your proje
 
 For example, say you want to log a message every time an object is initialized, you need to observe the invocation of `-[NSObject init]`. With XAspect, You can easily add `NSLog()` statements to `-[NSObject init]`.
 
-You could use XAspect to try this by yourself either: 
+You could try this by yourself either: 
 
  1. Find the following sample code in *Aspect-ObjectAllocation.m* in the *XAspectDev* project in the repository. Uncomment the `AspectPatch()` implementation, or 
 
- 2. Install XAspect in your project and add the following code in a new *.m* file.
+ 2. Create a *Aspect-ObjectAllocation.m* in your project and add the following code (you should also install XAspect):
 
 
 ```objc
