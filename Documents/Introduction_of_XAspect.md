@@ -167,6 +167,10 @@ AspectPatch(-, BOOL, application:(UIApplication *)application didFinishLaunching
 
 XAspect will weave those **aspect patches** into `-application:didFinishLaunchingWithOptions:` when the program finishes loading. The results are equivalent to what you did without XAspect.
 
+You may notice that for every time you want to add an aspect code to configure another library, you don't have to modify the original implementation of `-application:didFinishLaunchingWithOptions:`. You just need to implement an aspect patch using XAspect. That's [**"open for extension, and closed for modification."**][OCP]
+
+You also may notice that the extracted configuration code is reusable. You can copy the configuration file (asepct file) to another project for the same configuration — or, reuse it with a little modification.
+
 In this section, we demonstrate how to separate different aspect tasks from one class into different files. In the next section, we'll talk about how to encapsulate logic code for the same aspect in one file.
 
 
