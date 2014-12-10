@@ -181,7 +181,7 @@ The following sample code demonstrates how to achieve this goal. You can try eit
 
  * Find this sample code in *Aspect-CocoaLumberjack.m* in the *XAspectDev* project in the repository, or
 
- * Add the following code in a .m file in your project (You might need to change the class `AppDelegate` in the demo code to yours in your project):
+ * Create an *Aspect-CocoaLumberjack.m* file in your project, and add the following code (You might also need to install [**CocoaLumberjack**][CocoaLumberjack] with version `2.0.0-beta2` and change the class `AppDelegate` in the demo code to yours in your project if needed):
 
 
 ```objc
