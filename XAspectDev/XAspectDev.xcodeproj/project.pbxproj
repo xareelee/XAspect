@@ -25,7 +25,7 @@
 		11A50D261A2B664C00E68EAD /* MultiTargetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A50D251A2B664C00E68EAD /* MultiTargetTest.m */; };
 		11B890471A14481700FA68D0 /* Aspect-ObjectAllocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B890461A14481700FA68D0 /* Aspect-ObjectAllocation.m */; };
 		11B890491A1922B200FA68D0 /* NucleationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B890481A1922B200FA68D0 /* NucleationTest.m */; };
-		11C890BA19B02A37007D12B7 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11C890B919B02A37007D12B7 /* main.mm */; };
+		11C890BA19B02A37007D12B7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C890B919B02A37007D12B7 /* main.m */; };
 		11C890BD19B02A37007D12B7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C890BC19B02A37007D12B7 /* AppDelegate.m */; };
 		11C890C319B02A37007D12B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11C890C119B02A37007D12B7 /* Main.storyboard */; };
 		11C890C519B02A37007D12B7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11C890C419B02A37007D12B7 /* Images.xcassets */; };
@@ -79,7 +79,7 @@
 		11B890481A1922B200FA68D0 /* NucleationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NucleationTest.m; sourceTree = "<group>"; };
 		11C890B419B02A37007D12B7 /* XAspectDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XAspectDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C890B819B02A37007D12B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		11C890B919B02A37007D12B7 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		11C890B919B02A37007D12B7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		11C890BB19B02A37007D12B7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		11C890BC19B02A37007D12B7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		11C890C219B02A37007D12B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -224,7 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				11C890B819B02A37007D12B7 /* Info.plist */,
-				11C890B919B02A37007D12B7 /* main.mm */,
+				11C890B919B02A37007D12B7 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -453,7 +453,7 @@
 				11C890BD19B02A37007D12B7 /* AppDelegate.m in Sources */,
 				11E246791A2CC75F00359C96 /* XAViewController.m in Sources */,
 				11F2EC2619C0422C000A7F48 /* Aspect-CocoaLumberjack.m in Sources */,
-				11C890BA19B02A37007D12B7 /* main.mm in Sources */,
+				11C890BA19B02A37007D12B7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

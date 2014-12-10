@@ -34,7 +34,7 @@
 #include <iostream>
 
 using namespace std;
-
+using namespace XAsepct;
 
 // -----------------------------------------------------------------------------
 #pragma mark - Patch Build Setting Definition
@@ -54,32 +54,15 @@ BOOL XAIgnoreMethodListContainCString(XAIgnoreMethodList strArray, const char *s
 }
 
 
-// -----------------------------------------------------------------------------
-#pragma mark - Method Patch
-// -----------------------------------------------------------------------------
-//XAMethodPatchInfo findFirstPatchInList(XAMethodPatchInfoList list, SEL selector)
-//{
-//	XAMethodPatchInfo patch;
-//	// Find the patch in the list if the selector matches.
-//	for (XAMethodPatchInfoList::iterator iter = list.begin(); iter != list.end(); iter++) {
-//		if ((*iter).targetSelector == selector) {
-//			patch = (*iter);
-//			break;
-//		}
-//	}
-//	return patch;
-//}
-
-
 // =============================================================================
 #pragma mark - CrystallizationManager
 // =============================================================================
 
 #pragma mark -Instantiate
 // Singleton Pattern
-XAsepct::CrystallizationManager *XAsepct::CrystallizationManager::_sharedInstance = NULL;
+CrystallizationManager *CrystallizationManager::_sharedInstance = NULL;
 // Singleton Pattern
-XAsepct::CrystallizationManager *XAsepct::CrystallizationManager::sharedInstance()
+CrystallizationManager *CrystallizationManager::sharedInstance()
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -88,14 +71,14 @@ XAsepct::CrystallizationManager *XAsepct::CrystallizationManager::sharedInstance
 	return _sharedInstance;
 };
 // CrystallizationManager Constructor
-XAsepct::CrystallizationManager::CrystallizationManager()
+CrystallizationManager::CrystallizationManager()
 {
 	_needsBeCrystallized = false;
 }
 
 #pragma mark -Parse Patches
 // Parse the patches from the aspect class
-void XAsepct::CrystallizationManager::constructPatchBuild(Class srcClass, Class dstClass, const char *aspectName)
+void CrystallizationManager::constructPatchBuild(Class srcClass, Class dstClass, const char *aspectName)
 {
 	XAAssert(srcClass, "Aspect method source class (%s) must not be nil.", class_getName(srcClass));
 	XAAssert(dstClass, "Target class (%s) must not be nil.", class_getName(dstClass));
@@ -135,7 +118,7 @@ void XAsepct::CrystallizationManager::constructPatchBuild(Class srcClass, Class 
 	return;
 };
 
-void XAsepct::CrystallizationManager::mergeClassPatch(XAClassType classType, Class srcClass, Class dstClass, XAPatchBuildSettings settings)
+void CrystallizationManager::mergeClassPatch(XAClassType classType, Class srcClass, Class dstClass, XAPatchBuildSettings settings)
 {
 	// Contruct the patch build from the source class (aspect class).
 	XAClassPatchInfoList classPatchInfoList = parseClassPatchInfoList(classType, srcClass, settings);
@@ -154,7 +137,7 @@ void XAsepct::CrystallizationManager::mergeClassPatch(XAClassType classType, Cla
 	classPatchInfoList.clear();
 }
 
-XAClassPatchInfoList XAsepct::CrystallizationManager::parseClassPatchInfoList(XAClassType classType, Class srcClass, XAPatchBuildSettings settings)
+XAClassPatchInfoList CrystallizationManager::parseClassPatchInfoList(XAClassType classType, Class srcClass, XAPatchBuildSettings settings)
 {
 	// The return value.
 	XAClassPatchInfoList classPatchInfoList;
@@ -339,7 +322,7 @@ XAClassPatchInfoList XAsepct::CrystallizationManager::parseClassPatchInfoList(XA
 }
 
 
-const char * XAsepct::CrystallizationManager::customizedPriorityPatch(const char *defaultSelectorName, XACustomizedPriority *priority, XAClassType classType, const char *targetClassName, const char *patchSelectorName)
+const char * CrystallizationManager::customizedPriorityPatch(const char *defaultSelectorName, XACustomizedPriority *priority, XAClassType classType, const char *targetClassName, const char *patchSelectorName)
 {
 	// Clean the pointer string.
 	*priority = 0;
@@ -377,7 +360,7 @@ const char * XAsepct::CrystallizationManager::customizedPriorityPatch(const char
 
 #pragma mark -Crystallize
 // Crystallize all classes for the patches.
-void XAsepct::CrystallizationManager::crystallizeAllPatches()
+void CrystallizationManager::crystallizeAllPatches()
 {
 	if (_needsBeCrystallized)
 		_needsBeCrystallized = false;
@@ -399,7 +382,7 @@ void XAsepct::CrystallizationManager::crystallizeAllPatches()
 }
 
 // Recursive crystallize the target class from root.
-void XAsepct::CrystallizationManager::crystallizeClass(const char *className)
+void CrystallizationManager::crystallizeClass(const char *className)
 {
 	// Do nothing if the class has beed already crystallized.
 	if (hasBeenCrystallized(className))
@@ -426,7 +409,7 @@ void XAsepct::CrystallizationManager::crystallizeClass(const char *className)
 	_crystallizedClasses.insert(_crystallizedClasses.end(), className);
 }
 
-BOOL XAsepct::CrystallizationManager::hasBeenCrystallized(const char *className)
+BOOL CrystallizationManager::hasBeenCrystallized(const char *className)
 {
 	// Whether found in the _crystallizedClasses. Every crystallized class will
 	// be added to _crystallizedClasses list.
@@ -434,7 +417,7 @@ BOOL XAsepct::CrystallizationManager::hasBeenCrystallized(const char *className)
 			!= _crystallizedClasses.end());
 }
 
-void XAsepct::CrystallizationManager::recordCrystallizedClassPatches(const char *className, XAClassPatchCrystallizer patch)
+void CrystallizationManager::recordCrystallizedClassPatches(const char *className, XAClassPatchCrystallizer patch)
 {
 	// Find existing record. If not exist, create one.
 	std::map<const char *, XAClassPatchCrystallizer>::iterator iter = _crystallizedClassPatches.find(className);
@@ -447,14 +430,14 @@ void XAsepct::CrystallizationManager::recordCrystallizedClassPatches(const char 
 #pragma mark - XAClassPatchCrystallizer
 // =============================================================================
 #pragma mark -Constructor
-XAsepct::XAClassPatchCrystallizer::XAClassPatchCrystallizer()
+XAClassPatchCrystallizer::XAClassPatchCrystallizer()
 {
 	_className = NULL;
 	_isCrystallized = false;
 	_metaclass = NULL;
 	_cls = NULL;
 }
-XAsepct::XAClassPatchCrystallizer::XAClassPatchCrystallizer(const char *className)
+XAClassPatchCrystallizer::XAClassPatchCrystallizer(const char *className)
 {
 	_className = className;
 	_isCrystallized = false;
@@ -462,7 +445,7 @@ XAsepct::XAClassPatchCrystallizer::XAClassPatchCrystallizer(const char *classNam
 	_cls = classForName(className);
 }
 
-void XAsepct::XAClassPatchCrystallizer::digestClassPatchInfoList(XAClassType classType, XAClassPatchInfoList patches)
+void XAClassPatchCrystallizer::digestClassPatchInfoList(XAClassType classType, XAClassPatchInfoList patches)
 {
 	_isCrystallized = false;
 	XAAssert(_className, "The Info should have its class name.");
@@ -499,7 +482,7 @@ void XAsepct::XAClassPatchCrystallizer::digestClassPatchInfoList(XAClassType cla
 }
 
 
-void XAsepct::XAClassPatchCrystallizer::crystallizePatch()
+void XAClassPatchCrystallizer::crystallizePatch()
 {
 	// Ensure only crystallize once.
 	if (_isCrystallized)
@@ -533,7 +516,7 @@ void XAsepct::XAClassPatchCrystallizer::crystallizePatch()
 	
 };
 
-XAsepct::XAMethodPatchDict XAsepct::XAClassPatchCrystallizer::crystallize(XAClassType type, Class dstClass, XAMethodPatchDict methodPatch)
+XAMethodPatchDict XAClassPatchCrystallizer::crystallize(XAClassType type, Class dstClass, XAMethodPatchDict methodPatch)
 {
 	XAMethodPatchDict crystallizedMethodPatches;
 	for (XAMethodPatchDict::iterator iter = methodPatch.begin(); iter != methodPatch.end(); iter++) {
@@ -548,7 +531,7 @@ XAsepct::XAMethodPatchDict XAsepct::XAClassPatchCrystallizer::crystallize(XAClas
 #pragma mark - XAMethodPatch
 // =============================================================================
 
-XAsepct::XAMethodPatch::XAMethodPatch()
+XAMethodPatch::XAMethodPatch()
 {
 	_needsCrystallization = false;
 	
@@ -567,7 +550,7 @@ XAsepct::XAMethodPatch::XAMethodPatch()
 	_usingSourceType = XAMethodPatchSourceUndetermined; // Define when priming
 	_availableSourceStates = XAMethodPatchSourceUndetermined; // Define when priming
 }
-XAsepct::XAMethodPatch::XAMethodPatch(const char *className, Class cls, XAClassType classType, SEL selector, const char *typeEncoding)
+XAMethodPatch::XAMethodPatch(const char *className, Class cls, XAClassType classType, SEL selector, const char *typeEncoding)
 {
 	_needsCrystallization = false;
 	
@@ -588,14 +571,14 @@ XAsepct::XAMethodPatch::XAMethodPatch(const char *className, Class cls, XAClassT
 }
 
 #pragma mark -Accessors
-const char * XAsepct::XAMethodPatch::className(){ return _className; };
-XAOriginImpType XAsepct::XAMethodPatch::originImpType(){ return _originImpType; };
-XAMethodPatchSource XAsepct::XAMethodPatch::availableSourceStates(){ return _availableSourceStates; };
-XAMethodPatchSource XAsepct::XAMethodPatch::usingSourceType(){ return _usingSourceType; };
+const char * XAMethodPatch::className(){ return _className; };
+XAOriginImpType XAMethodPatch::originImpType(){ return _originImpType; };
+XAMethodPatchSource XAMethodPatch::availableSourceStates(){ return _availableSourceStates; };
+XAMethodPatchSource XAMethodPatch::usingSourceType(){ return _usingSourceType; };
 
 
 #pragma mark -Digest
-void XAsepct::XAMethodPatch::digestMethodPatchInfo(XAClassType classType, XAMethodPatchInfo methodPatchInfo)
+void XAMethodPatch::digestMethodPatchInfo(XAClassType classType, XAMethodPatchInfo methodPatchInfo)
 {
 	XASafeCategoryPatchData safeCategoryPatchData = methodPatchInfo.safeCategoryPatchData;
 	XAAspectPatchData aspectPatchData = methodPatchInfo.aspectPatchData;
@@ -647,7 +630,7 @@ void XAsepct::XAMethodPatch::digestMethodPatchInfo(XAClassType classType, XAMeth
 }
 
 #pragma mark -Crystallize
-void XAsepct::XAMethodPatch::crystallize()
+void XAMethodPatch::crystallize()
 {
 	// Crystallize only if needed.
 	if (_needsCrystallization == false)
@@ -729,7 +712,7 @@ void XAsepct::XAMethodPatch::crystallize()
 	_aspectPatchData.clear();
 }
 
-void XAsepct::XAMethodPatch::printDescription()
+void XAMethodPatch::printDescription()
 {
 	// (N/E/S)
 	// N: the origin implementation 'N'ot exists
@@ -765,7 +748,7 @@ void XAsepct::XAMethodPatch::printDescription()
 };
 
 #pragma mark -Helper
-void XAsepct::XAMethodPatch::updateImpStates()
+void XAMethodPatch::updateImpStates()
 {
 	// Update origin implementation
 	{
@@ -808,7 +791,7 @@ void XAsepct::XAMethodPatch::updateImpStates()
 	}
 }
 
-BOOL XAsepct::XAMethodPatch::injectMethodPatchIntoClass(SEL selector, IMP implementation) {
+BOOL XAMethodPatch::injectMethodPatchIntoClass(SEL selector, IMP implementation) {
 	XAAssert(_typeEncoding, "Type encoding must not be nil.");
 	return class_addMethod(_class, selector, implementation, _typeEncoding);
 }

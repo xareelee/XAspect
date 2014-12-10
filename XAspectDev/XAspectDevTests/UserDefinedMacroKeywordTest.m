@@ -21,7 +21,7 @@
 
 
 #undef NSAssertMacroKeywordEqual
-#define NSAssertMacroKeywordEqual(Keyword1, Keyword2, message, ...) // Don't make the assertion in this test file.
+#define NSAssertMacroKeywordEqual(Keyword1, Keyword2, message, ...) // Don't make the assertion work in this test file.
 
 
 // -----------------------------------------------------------------------------

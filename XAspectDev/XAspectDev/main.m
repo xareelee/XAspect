@@ -11,7 +11,7 @@
 
 int main(int argc, char * argv[]) {
 	@autoreleasepool {
-		printf("\n*** will create the application (UIApplicationMain())! ***\n\n");
+		printf("\n*** Create the application (UIApplicationMain())! ***\n\n");
 	    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
 	}
 }
