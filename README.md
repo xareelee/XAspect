@@ -25,7 +25,7 @@ You can also simply include XAspect in your project manually. Just add all of th
 At a Glance
 -----------
 
-Using XAspect is a little like writing **patches** or **plugins** for your project. With a couple of lines to create an aspect context, you could start writing your patch implementation. XAspect will automatically merge your patches into your program when the program finishes loading.
+Using XAspect is a little like writing **patches** or **plugins** for source code. With a couple of lines to create an aspect context, you could start writing your patch implementation. XAspect will automatically merge those patches into your program when the program finishes loading.
 
 For example, say you want to log a message every time an object is initialized, you need to observe the invocation of `-[NSObject init]`. With XAspect, You can easily add `NSLog()` statements to `-[NSObject init]`.
 
