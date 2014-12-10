@@ -273,7 +273,7 @@ Now we'd like you try to do the following tasks to experience the power of XAspe
 
  - Copy the aspect file into another project. Try to reuse it with a little modification. At least, you can reuse the configuration code.
 
- - Remove CocoaLumberjack library from project, and use `NSLog()` instead of. This shows how you can change using libraries/frameworks without modifying many files — you just need to change in one file.
+ - Remove CocoaLumberjack library from project, and use `NSLog()` instead. This shows how you can change using libraries/frameworks without modifying many files — you just need to change in one file.
 
  - Remove this aspect file from the project (or comment out all code in this file). You'll see you remove the multiple implementations through the classes in the project without modifying any source code.
 
