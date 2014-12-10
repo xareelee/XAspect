@@ -121,7 +121,8 @@ There are some downsides and restrictions. Please read the section ['Downsides a
 Any help or contribution is welcome. Please read the [Development Notes] to find what you can help. 
 
 ### Author
-* Xaree Lee (李岡諭, Kang-Yu Lee), an iOS developer from Taiwan.
+* Xaree Lee (李岡諭, Kang-Yu Lee), an iOS developer from Taiwan. 
+    - <xareelee@gmail.com>
 
 ### License
 XAspect is available under the MIT license. See the [LICENSE] file for more info.
