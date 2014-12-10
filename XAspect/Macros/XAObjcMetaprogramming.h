@@ -1,5 +1,5 @@
 // <XAspect>
-// XAMacros.h
+// XAObjcMetaprogramming.h
 //
 // Copyright (c) 2014 Xaree Lee (Kang-Yu Lee)
 // Released under the MIT license (see below)
@@ -32,8 +32,8 @@
  */
 
 // =============================================================================
-#ifndef XAspect_XAMacros_h
-#define XAspect_XAMacros_h
+#ifndef XAspect_XAObjcMetaprogramming_h
+#define XAspect_XAObjcMetaprogramming_h
 // =============================================================================
 //#define DEBUG 1 // Force using Debug
 #import "XAExtObjcMetamacros.h"
@@ -855,8 +855,8 @@
 #define AtAspect HierarchyTest // Define your aspect namespace.
 #define AtAspectOfClass NSObject // Define your aspect class.
 ////////////////////////////////////////////////////////////////////////////////
-// Put your test macros here and run `gcc -E path-to/XAMacros.h` or
-// `clnag -E path-to/XAMacros.h` in Terminal.app to see the results.
+// Put your test macros here and run `gcc -E path-to/XAObjcMetaprogramming.h` or
+// `clnag -E path-to/XAObjcMetaprogramming.h` in Terminal.app to see the results.
 
 
 
@@ -866,6 +866,6 @@
 #endif
 
 // =============================================================================
-#endif // End XAspect_XAMacros_h
+#endif // End XAspect_XAObjcMetaprogramming_h
 // =============================================================================
 

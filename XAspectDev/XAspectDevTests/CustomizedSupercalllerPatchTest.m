@@ -59,8 +59,6 @@
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForSupercallerSequence1);
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForSupercallerSequence2);
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForSupercallerSequence3);
-@synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForSupercallerSequence3);
-@synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForSupercallerSequence3);
 
 // To test `XAMessageForwardSuper` and `XAMessageForwardSuperDirectly`.
 + (NSInteger)invokeXAMessageForwardSuper{

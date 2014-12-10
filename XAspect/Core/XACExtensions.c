@@ -25,7 +25,7 @@
 
 #import "XACExtensions.h"
 #import "XADebugMacros.h"
-#import "XAMacros.h"
+#import "XAObjcMetaprogramming.h"
 
 #include <string.h>
 #include <stdlib.h>

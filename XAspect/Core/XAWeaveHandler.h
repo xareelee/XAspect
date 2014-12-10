@@ -1,5 +1,5 @@
 // <XAspect>
-// XAWeave.h
+// XAWeaveHandler.h
 //
 // Copyright (c) 2014 Xaree Lee (Kang-Yu Lee)
 // Released under the MIT license (see below)
@@ -43,7 +43,7 @@ typedef NSInteger AutoNucleationType ;
 typedef union {
 	AutoNucleationType Default;
 	AutoNucleationType SuperCaller;
-//	AutoNucleationType DefaultAndSuperCaller;
+//	AutoNucleationType DefaultAndSuperCaller; // No need
 } XAutocompletionTypeHelper;
 
 // For Auto completion.
@@ -62,5 +62,5 @@ OBJC_EXTERN void _XAspect_build_patches(Class aspectMethodSourceClass, Class tar
 
 
 
-
 #endif // __XAspect__Weave__
+

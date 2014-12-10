@@ -1,5 +1,5 @@
 // <XAspect>
-// XAWeave.cpp
+// XAWeaveHandler.cpp
 //
 // Copyright (c) 2014 Xaree Lee (Kang-Yu Lee)
 // Released under the MIT license (see below)
@@ -22,7 +22,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "XAWeave.h"
+#import "XAWeaveHandler.h"
 #import "XADebugMacros.h"
 #import "XACrystallization.h"
 #include <stdlib.h>

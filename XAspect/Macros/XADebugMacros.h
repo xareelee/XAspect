@@ -25,7 +25,16 @@
 #ifndef XAspect_Debug_Macro_h
 #define XAspect_Debug_Macro_h
 
-#import "XAspectConfig.h"
+
+// If defining the following macros, XAspect will print out the corresponding
+// messages. You may macro out those macros to turn off the logging.
+//#define XAspectLogVerbose
+//#define XAspectLogSorting
+//#define XAspectLogMerging
+//#define XAspectLogWeaving
+#if defined(XAspectLogVerbose) || defined(XAspectLogSorting) || defined(XAspectLogMerging) || defined(XAspectLogWeaving)
+	#warning Comment out the log macros before releasing to github.
+#endif
 
 
 // =============================================================================
@@ -78,20 +87,26 @@
 // XAAssert()
 #ifdef DEBUG
 	#define XAAssert(assertion, description, ...) \
-		XAAssertNot(!(assertion), description,  ## __VA_ARGS__)
-	#define XAAssertNot(assertion, description, ...) \
-		if (assertion) { \
-			fprintf(stderr, "\n--------------------------------------");\
-			fprintf(stderr, "\n****** XAspect Assertion Failed ******");\
-			fprintf(stderr, "\n--------------------------------------\n");\
-			fprintf(stderr, "** Condition: %s\n** Reason: ", #assertion); \
-			fprintf(stderr, description, ## __VA_ARGS__); \
-			fprintf(stderr, "\n** Function: %s", __PRETTY_FUNCTION__);\
-			fprintf(stderr, "\n** file %s, line %d\n", __FILE__, __LINE__); \
-			abort(); \
-		}
+		do { \
+			if (!(assertion)) { \
+				fprintf(stderr, "\n--------------------------------------");\
+				fprintf(stderr, "\n****** XAspect Assertion Failed ******");\
+				fprintf(stderr, "\n--------------------------------------\n");\
+				fprintf(stderr, "** Condition: %s\n** Reason: ", #assertion); \
+				fprintf(stderr, description, ## __VA_ARGS__); \
+				fprintf(stderr, "\n** Function: %s", __PRETTY_FUNCTION__);\
+				fprintf(stderr, "\n** file %s, line %d\n", __FILE__, __LINE__); \
+				abort(); \
+			} \
+		} while (0)
 #else
-	#define XAAssert(assertion, description, ...) // consuming
+	#define XAAssert(assertion, description, ...) do {} while (0)// consuming
+
 #endif /* DEBUG */
+
+#define XAAssertNot(assertion, description, ...) \
+	XAAssert(!(assertion), description, ## __VA_ARGS__)
 // -----------------------------------------------------------------------------
 #endif /* XAspect_Debug_Macro_h */
+
+

@@ -26,8 +26,8 @@
 #ifndef XAspect_h
 #define XAspect_h
 
-#import "XAMacros.h"
-#import "XAWeave.h"
+#import "XAObjcMetaprogramming.h"
+#import "XAWeaveHandler.h"
 
 
 #endif

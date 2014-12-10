@@ -48,3 +48,9 @@
 #define COCOAPODS_VERSION_MINOR_XAspect_Macros 0
 #define COCOAPODS_VERSION_PATCH_XAspect_Macros 0
 
+// XAspect/XAspectMetaprogramming
+#define COCOAPODS_POD_AVAILABLE_XAspect_XAspectMetaprogramming
+#define COCOAPODS_VERSION_MAJOR_XAspect_XAspectMetaprogramming 1
+#define COCOAPODS_VERSION_MINOR_XAspect_XAspectMetaprogramming 0
+#define COCOAPODS_VERSION_PATCH_XAspect_XAspectMetaprogramming 0
+

@@ -25,9 +25,9 @@
 
 #import "XACrystallization.h"
 #import "XACExtensions.h"
-#import "XAMacros.h"
 #import "XAExtObjcMetamacros.h"
 #import "XADebugMacros.h"
+#import "XAObjcMetaprogramming.h"
 #import <dispatch/dispatch.h>
 
 #include <stdio.h>
@@ -665,7 +665,7 @@ void XAsepct::XAMethodPatch::crystallize()
 		_safeCategoryPatchData.implementation != _originImplementation) {
 		
 		// Inject the safe category implementations. All injection should succeed.
-		bool succeed = injectMethodPatchIntoClass(_selector, _safeCategoryPatchData.implementation);
+		bool succeed __attribute__((unused)) = injectMethodPatchIntoClass(_selector, _safeCategoryPatchData.implementation);
 		XAAssert(succeed, "**Failure: Safe category method injection failed.\n**Reason: the implementation already exists.\n");
 		_usingSourceType = XAMethodPatchSourceSafeCategory;
 	}
@@ -683,7 +683,7 @@ void XAsepct::XAMethodPatch::crystallize()
 				// We should prime the default implementation, or raise an exception.
 				XAAssert(_defaultPatchData.implementation, "**Default implementation not found for nucleation! You should implement a default implementation by `@synthesizeNucleusPatch()` for %s[%s %s].\n", XASortingSymbol(_classType), class_getName(_class), sel_getName(_selector));
 				// Inject the default implementation.
-				bool succeed = injectMethodPatchIntoClass(_selector, _defaultPatchData.implementation);
+				bool succeed __attribute__((unused)) = injectMethodPatchIntoClass(_selector, _defaultPatchData.implementation);
 				XAAssert(succeed, "**Inject default implementation failed. This should not happen. Please check the code!\n");
 				_usingSourceType = XAMethodPatchSourceDefault;
 				break;
@@ -695,7 +695,7 @@ void XAsepct::XAMethodPatch::crystallize()
 			case XAOriginImpTypeExistsInSuperclass:{
 				IMP superCallerImplementation = _supercallerPatchData.implementation;
 				XAAssert(superCallerImplementation != NULL, "The supercaller implementation for %s[%s %s] not found!\nThe class does respond to the selector, but it doesn't have its own implementation for method swizzling.\nYou should implement the supercaller for this method. Please add the implementation to the target class manually via either: \n\t(1) use `@synthesizeNucleusPatch()` macro in the `@classPatchField()` field, or\n\t(3) manually implement the supercaller patch in the source class or a traditional Obj-C category (caution: don't use Safe Category to invoke superclass's implementation!).", XASortingSymbol(_classType), class_getName(_class), sel_getName(_selector));
-				bool succeed = injectMethodPatchIntoClass(_selector, superCallerImplementation);
+				bool succeed __attribute__((unused)) = injectMethodPatchIntoClass(_selector, superCallerImplementation);
 				XAAssert(succeed, "**Inject supercaller implementation failed. This should not happen. Please check the code!\n");
 				_usingSourceType = XAMethodPatchSourceSuperCaller;
 				break;
@@ -713,7 +713,7 @@ void XAsepct::XAMethodPatch::crystallize()
 		// Inject the aspect patch. The target class must not respond to the
 		// selector and not have the implementation.
 		XAAssertNot(class_respondsToSelector(_class, (*iter).injectionSelector), "Before injection, the class should not respond the selector '%s'. Class: %p; implementation: %p.", sel_getName((*iter).injectionSelector), _class, (*iter).implementation);
-		bool succeed = injectMethodPatchIntoClass((*iter).injectionSelector, (*iter).implementation);
+		bool succeed __attribute__((unused)) = injectMethodPatchIntoClass((*iter).injectionSelector, (*iter).implementation);
 		XAAssert(succeed, "Injecting aspect patch '%s' failed. This should not happen. Please check the code! Class: %p; implementation: %p.", sel_getName((*iter).injectionSelector), _class, (*iter).implementation);
 		// Make selector chain.
 		makeSelectorChain(_class, _selector, (*iter).injectionSelector);

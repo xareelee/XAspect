@@ -30,7 +30,7 @@
 #import <objc/NSObjCRuntime.h>
 #import "XAFoundation.h"
 #import "XACExtensions.h"
-#import "XAWeave.h"
+#import "XAWeaveHandler.h"
 
 // C++
 #include <map>
