@@ -11,6 +11,7 @@ Be sure you've already read the [introduction] before this article.
 	* [Safe Category Patch](#safe-category-patch)
 	* [Nucleus Patch](#nucleus-patch)
  - [Downsides and Restrictions](#downsides-and-restrictions)
+ - [Tips](#tips)
 
 
 Aspect Field and Patch Field
@@ -240,6 +241,52 @@ Downsides and Restrictions
  - If you want to add an aspect patch to `-dealloc`, or any method you're not allowed to invoke directly, you should forward the message to the source implementation using `XAMessageForwardDirectly()`. This macro will not invoke the target selector for method completion. You may use `XAMessageForward()` first for method completion, and then change the macro to `XAMessageForwardDirectly()` to silence the compilation error.
 
 
+Tips
+----
+
+
+### Customizing Code Snippets in Xcode
+
+You can add customized templates as code snippets for method completion. We list some examples below. You can copy them into your project in Xcode first, and then [drag them into the code snippet library in Xcode][code snippet].
+
+#### Aspect Namespace
+
+Define `@aspect` as the completion shortcut for creating an aspect namespace using the following template:
+
+```objc
+#define AtAspect <#AspectName#>
+
+<#Add Class Patch Field Here#>
+
+#undef AtAspect
+```
+
+#### Class Patch Field
+
+Define `@classPatchField` as the completion shortcut for creating a class patch field using the following template:
+
+```objc
+#define AtAspectOfClass <#TargetClass#>
+@classPatchField(<#TargetClass#>)
+
+<#PatchImplementation#>
+
+@end
+#undef AtAspectOfClass
+```
+
+
+#### Aspect Patch
+
+Define `@aspectPatch` as:
+
+```objc
+AspectPatch(<#MethodSign#>, <#ReturnType#>, <#MethodBody#>) {
+	
+	XAMessageForward(<#MethodBodyAndParameters, ...#>);
+}
+```
+
 
 
 <!--Links-->
@@ -247,3 +294,4 @@ Downsides and Restrictions
 [libextobjc]: https://github.com/jspahrsummers/libextobjc
 
 [advice]: http://en.wikipedia.org/wiki/Advice_(programming)
+[code snippet]: http://nshipster.com/xcode-snippets/

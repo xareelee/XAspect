@@ -14,8 +14,6 @@
 #define AtAspectOfClass NSObject
 @classPatchField(NSObject)
 
-@synthesizeNucleusPatch(Default, -, VoidPointer, something);
-
 /* 
  Uncomment this patch will print a message for every object initialization. 
  */
@@ -27,6 +25,7 @@
 //	// Forward the message to the origin implementation.
 //	return XAMessageForward(init);
 //}
+
 
 @end
 

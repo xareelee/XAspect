@@ -107,6 +107,7 @@
 // Concrete macro: make sure each macro parameter has been expanded.
 #define __Concrete_classPatchField(CLASS, ASPECT)\
 	\
+	class CLASS;\
 	/*
 	 Create a subclass of the target class using the class name and aspect name.
 
@@ -127,7 +128,7 @@
 	 to the superclass with a prefix (the aspect name), and chained up with the
 	 target aspect method when weaving.
 	 */ \
-	interface _XAspect_Class_For_Aspect(CLASS, ASPECT) : CLASS {} \
+	@interface _XAspect_Class_For_Aspect(CLASS, ASPECT) : CLASS {} \
 	@end \
 	\
 	/*
