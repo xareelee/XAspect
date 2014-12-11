@@ -237,7 +237,7 @@ Downsides and Restrictions
 
  - You should rename method manually: if you want to rename your method name, you can't use Xcode refactor instruction (**Xcode -> Edit -> Refactor -> Rename**). Instead, you should rename manually (Find and Replace... `cmd`+`shift`+`option`+`F`). You can still use refactor instruction to rename class name. 
 
-
+ - If you want to add an aspect patch to `-dealloc`, or any method you're not allowed to invoke directly, you should forward the message to the source implementation using `XAMessageForwardDirectly()`. This macro will not invoke the target selector for method completion. You may use `XAMessageForward()` first for method completion, and then change the macro to `XAMessageForwardDirectly()` to silence the compilation error.
 
 
 
