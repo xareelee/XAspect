@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'XAspect'
-  s.version      = '1.0.0'
+  s.version      = '1.0.1'
   s.license      = 'MIT'
   s.summary      = 'Making code maintainable and reusable with aspect-oriented programming for Objective-C'
   s.homepage     = 'https://github.com/xareelee/XAspect'
