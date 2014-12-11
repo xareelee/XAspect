@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'XAspect'
-  s.version      = '1.0.0'
+  s.version      = '1.0.1'
   s.license      = 'MIT'
   s.summary      = 'Making code maintainable and reusable with aspect-oriented programming for Objective-C'
   s.homepage     = 'https://github.com/xareelee/XAspect'
@@ -18,14 +18,9 @@ Pod::Spec.new do |s|
        'CLANG_CXX_LIBRARY' => 'libc++'
   }
 
-  s.public_header_files = 'XAspect/*.h'
-  s.source_files = 'XAspect/*.{h,m}'
-  s.default_subspecs = 'Core', 'XAspectMetaprogramming'
-
-  s.subspec 'Default' do |ss|
-    ss.source_files = 'XAspect/*.{h,m}'
-    ss.dependency 'XAspect/Core'
-  end
+  s.public_header_files = 'XAspect/XAspect.h'
+  s.source_files = 'XAspect/XAspect.h'
+  s.default_subspecs = 'Core', 'Macros'
 
   s.subspec 'Macros' do |ss|
     ss.source_files = 'XAspect/Macros/*.h'
@@ -36,10 +31,4 @@ Pod::Spec.new do |s|
     ss.dependency 'XAspect/Macros'
   end
 
-  s.subspec 'XAspectMetaprogramming' do |ss|
-    ss.source_files = 'XAspect/XAspectMetaprogramming/*.{h,m,mm,c,cpp}'
-    ss.dependency 'XAspect/Macros'
-    ss.dependency 'XAspect/Core'
-  end
-  
 end

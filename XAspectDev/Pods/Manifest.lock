@@ -8,15 +8,12 @@ PODS:
   - CocoaLumberjack/Core (2.0.0-beta2)
   - CocoaLumberjack/Extensions (2.0.0-beta2):
     - CocoaLumberjack/Core
-  - XAspect (1.0.0):
-    - XAspect/Core (= 1.0.0)
-    - XAspect/XAspectMetaprogramming (= 1.0.0)
-  - XAspect/Core (1.0.0):
+  - XAspect (1.0.1):
+    - XAspect/Core (= 1.0.1)
+    - XAspect/Macros (= 1.0.1)
+  - XAspect/Core (1.0.1):
     - XAspect/Macros
-  - XAspect/Macros (1.0.0)
-  - XAspect/XAspectMetaprogramming (1.0.0):
-    - XAspect/Core
-    - XAspect/Macros
+  - XAspect/Macros (1.0.1)
 
 DEPENDENCIES:
   - CocoaLumberjack (= 2.0.0-beta2)
@@ -28,6 +25,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CocoaLumberjack: 956d3fb98fed498a13d56499f262c975ef431c98
-  XAspect: 3249480cf1d54b113d5a2cdfaaf464108d069360
+  XAspect: 5b13a2afea2f9cdc2b847d81db551fdbb893681b
 
 COCOAPODS: 0.35.0

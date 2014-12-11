@@ -17,7 +17,6 @@
 AspectPatch(+, NSInteger, valueForSharedClassBetweenTargets)
 {
 	return XAMessageForward(valueForSharedClassBetweenTargets) + 20;
-	return XAMessageForward(valueForSharedClassBetweenTargets) + 20;
 }
 
 @end
