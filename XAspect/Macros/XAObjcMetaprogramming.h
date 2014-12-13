@@ -653,7 +653,7 @@
 #define XAMessageForwardSuper(MethodBodyAndParameters, ...) \
 	({ \
 		_AutoMethodCompletionForInvocation(MethodBodyAndParameters, ## __VA_ARGS__); \
-		[self _XACallSuperMethod(AtAspectOfClass, MethodBodyAndParameters, ## __VA_ARGS__)]; \
+		[super _XACallSuperMethod(AtAspectOfClass, MethodBodyAndParameters, ## __VA_ARGS__)]; \
 	})
 
 /**
@@ -662,7 +662,7 @@
  */
 #define XAMessageForwardSuperDirectly(MethodBodyAndParameters, ...) \
 	({ \
-		[self _XACallSuperMethod(AtAspectOfClass, MethodBodyAndParameters, ## __VA_ARGS__)]; \
+		[super _XACallSuperMethod(AtAspectOfClass, MethodBodyAndParameters, ## __VA_ARGS__)]; \
 	})
 
 
@@ -670,8 +670,8 @@
 // _AutoMethodCompletionForInvocation()
 ////////////////////////////////////////////////////////////////////////////////
 /**
- Autocompletion for aspect method. It won't actually invoke the selector by
- compiler optimization by voidifying.
+ Autocompletion for aspect method. It won't actually invoke the selector
+ silenced (voidified) by compiler optimization.
  */
 #define _AutoMethodCompletionForInvocation(MethodBodyAndParameters, ...) \
 	({(void)((NO) && ((void)[self MethodBodyAndParameters, ## __VA_ARGS__], NO));})
