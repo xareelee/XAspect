@@ -434,15 +434,17 @@ XAClassPatchCrystallizer::XAClassPatchCrystallizer()
 {
 	_className = NULL;
 	_isCrystallized = false;
-	_metaclass = NULL;
 	_cls = NULL;
+	_metaclass = NULL;
 }
 XAClassPatchCrystallizer::XAClassPatchCrystallizer(const char *className)
 {
 	_className = className;
 	_isCrystallized = false;
-	_metaclass = metaclassForName(className);
 	_cls = classForName(className);
+	_metaclass = metaclassForName(className);
+	XAAssert(_cls, "The class object for name '%s' should exist.", className);
+	XAAssert(_metaclass, "The meta class object for name '%s' should exist.", className);
 }
 
 void XAClassPatchCrystallizer::digestClassPatchInfoList(XAClassType classType, XAClassPatchInfoList patches)
