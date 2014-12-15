@@ -68,7 +68,7 @@ Here are the conventions and tips for encapsulation:
 
  - Create a **.m** file for one aspect (or **.mm** for Objective-C++). Usually, you don't need a **.h** file to expose the interface.
 
- - Name the file as **'Aspect-<#AspectNamespace#>'**. The prefix **'Aspect-'** indicates this file is an aspect patch file for the specific aspect.
+ - Name the file as **'XAspect-<#AspectNamespace#>'**. The prefix **'XAspect-'** indicates this file is an aspect patch file for the specific aspect.
 
  - One aspect file should contain only one aspect; one aspect should be encapsulated in only one file.
 
