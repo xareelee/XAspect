@@ -232,6 +232,8 @@ By the way, to use `@tryCustomizeSupercallerPatch()`, you still need to synthesi
 Downsides and Restrictions
 -------------------------
 
+ - XAspect doesn't support any variadic method for aspect patches (e.g. `+[NSArray  arrayWithObjects:(id)firstObj, ...]`). Safe category patch should be OK.
+
  - Don't use Obj-C keyword `super` directly in any patch. The keyword `super` in patch field equals to the keyword `self`. Use macro `XAMessageForwardSuper()` to invoke the superclass's implementation. You also need to synthesize the supercaller nucleus patch.
 
  - If you use `@synthesizeNucleusPatch()` to synthesize a patch with return type `void *`, you should use the type `VoidPointer` instead. This is because that the null return value implementation (`_XANullReturnValueImplementation()`) will not handle type `void *` correctly. 
