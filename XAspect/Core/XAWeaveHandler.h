@@ -53,6 +53,9 @@ OBJC_EXTERN XAutocompletionTypeHelper _XAutoNucleationHelper;
 typedef long XACustomizedPriority;
 #define XACustomizedPriorityMax LONG_MAX
 
+// The count of calling `XALogWarning`
+OBJC_EXTERN NSUInteger XAspectWarningCounts;
+
 
 // -----------------------------------------------------------------------------
 #pragma mark - Weaver

@@ -192,12 +192,12 @@ XAClassPatchInfoList CrystallizationManager::parseClassPatchInfoList(XAClassType
 				aspectPatchData.injectionSelector = selector;
 				
 				XAMethodPatchInfo methodPatchInfo = classPatchInfoList[targetSelector];
+				XAAssert(methodPatchInfo.aspectPatchData.injectionSelector == NULL,
+						 "Duplicated aspect patch (%s[%s %s] @%s). The same patch has already existed.\n",
+						 XASortingSymbol(classType), settings.targetClassName, targetSelectorName, settings.aspectName);
 				methodPatchInfo.description = methodDescription;
 				methodPatchInfo.aspectPatchData = aspectPatchData;
 				
-				XAAssert(classPatchInfoList[targetSelector].aspectPatchData.implementation == NULL,
-						 "Duplicated aspect patch (%s[%s %s] @%s). The same patch has already existed.",
-						 XASortingSymbol(classType), settings.targetClassName, targetSelectorName, settings.aspectName);
 				classPatchInfoList[targetSelector] = methodPatchInfo;
 				XALogSorting("  %saspect  --> %s (%s)\n", XASortingSymbol(classType), targetSelectorName, selectorName);
 			}
@@ -379,6 +379,13 @@ void CrystallizationManager::crystallizeAllPatches()
 	// Finish
 	// Next crystallizeAllPatches() will start over again.
 	_crystallizedClasses.clear();
+	
+	XALogWeaving("\n==================================================\n");
+	XALogWeaving("[Finish crystallization]");
+	if (XAspectWarningCounts)
+		printf("\nXAspect warnings count: %lu.\n", (unsigned long) XAspectWarningCounts);
+	XALogWeaving("\n==================================================\n");
+	
 }
 
 // Recursive crystallize the target class from root.
@@ -697,9 +704,14 @@ void XAMethodPatch::crystallize()
 	for (std::vector<XAAspectPatchData>::iterator iter = _aspectPatchData.begin(); iter != _aspectPatchData.end(); iter++) {
 		// Inject the aspect patch. The target class must not respond to the
 		// selector and not have the implementation.
-		XAAssertNot(class_respondsToSelector(_class, (*iter).injectionSelector), "Before injection, the class should not respond the selector '%s'. Class: %p; implementation: %p.", sel_getName((*iter).injectionSelector), _class, (*iter).implementation);
+		if (class_respondsToSelector(_class, (*iter).injectionSelector)) {
+			XALogWarning("Duplicated aspect patch '%s'. You can ignore this warning if you are sure this aspect patch is shared between multiple targets. XAspect skips weaving this aspect patch.\n\n", sel_getName((*iter).injectionSelector));
+			continue;
+		}
+		
 		bool succeed __attribute__((unused)) = injectMethodPatchIntoClass((*iter).injectionSelector, (*iter).implementation);
 		XAAssert(succeed, "Injecting aspect patch '%s' failed. This should not happen. Please check the code! Class: %p; implementation: %p.", sel_getName((*iter).injectionSelector), _class, (*iter).implementation);
+
 		// Make selector chain.
 		makeSelectorChain(_class, _selector, (*iter).injectionSelector);
 	}

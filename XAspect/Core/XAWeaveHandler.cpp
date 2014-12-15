@@ -30,7 +30,7 @@
 
 // For Auto completion.
 XAutocompletionTypeHelper _XAutoNucleationHelper;
-
+NSUInteger XAspectWarningCounts;
 
 // -----------------------------------------------------------------------------
 #pragma mark - Weaver

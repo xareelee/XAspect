@@ -32,7 +32,8 @@
 //#define XAspectLogSorting
 //#define XAspectLogMerging
 //#define XAspectLogWeaving
-#if defined(XAspectLogVerbose) || defined(XAspectLogSorting) || defined(XAspectLogMerging) || defined(XAspectLogWeaving)
+//#define XAspectLogWarning
+#if defined(XAspectLogVerbose) || defined(XAspectLogSorting) || defined(XAspectLogMerging) || defined(XAspectLogWeaving) || defined(XAspectLogWarning)
 	#warning Comment out the log macros before releasing to github.
 #endif
 
@@ -42,7 +43,7 @@
 // =============================================================================
 #if defined(DEBUG) && defined(XAspectLogVerbose)
 	#define XALogVerbose(...) printf(__VA_ARGS__)
-	#define XALogVerboseIf(condition, ...) if ((condition)) printf(__VA_ARGS__)
+	#define XALogVerboseIf(condition, ...) do{ if ((condition)) XALogVerbose(__VA_ARGS__); }while(0)
 #else // Do nothing; silence the message
 	#define XALogVerbose(...) do{}while(0)
 	#define XALogVerboseIf(condition, ...) do{}while(0)
@@ -50,7 +51,7 @@
 // -----------------------------------------------------------------------------
 #if defined(DEBUG) && defined(XAspectLogSorting)
 	#define XALogSorting(...) printf(__VA_ARGS__)
-	#define XALogSortingIf(condition, ...) if ((condition)) printf(__VA_ARGS__)
+	#define XALogSortingIf(condition, ...) do{ if ((condition)) XALogSorting(__VA_ARGS__); }while(0)
 #else // Do nothing; silence the message
 	#define XALogSorting(...) do{}while(0)
 	#define XALogSortingIf(condition, ...) do{}while(0)
@@ -58,7 +59,7 @@
 // -----------------------------------------------------------------------------
 #if defined(DEBUG) && defined(XAspectLogMerging)
 	#define XALogMerging(...) printf(__VA_ARGS__)
-	#define XALogMergingIf(condition, ...) if ((condition)) printf(__VA_ARGS__)
+	#define XALogMergingIf(condition, ...) do{ if ((condition)) XALogMerging(__VA_ARGS__); }while(0)
 #else // Do nothing; silence the message
 	#define XALogMerging(...) do{}while(0)
 	#define XALogMergingIf(condition, ...) do{}while(0)
@@ -66,7 +67,7 @@
 // -----------------------------------------------------------------------------
 #if defined(DEBUG) && (defined(XAspectLogSorting) || defined(XAspectLogMerging))
 	#define XALogBuilding(...) printf(__VA_ARGS__)
-	#define XALogBuildingIf(condition, ...) if ((condition)) printf(__VA_ARGS__)
+	#define XALogBuildingIf(condition, ...) do{ if ((condition)) XALogBuilding(__VA_ARGS__); }while(0)
 #else // Do nothing; silence the message
 	#define XALogBuilding(...) do{}while(0)
 	#define XALogBuildingIf(condition, ...) do{}while(0)
@@ -74,11 +75,18 @@
 // -----------------------------------------------------------------------------
 #if defined(DEBUG) && defined(XAspectLogWeaving)
 	#define XALogWeaving(...) printf(__VA_ARGS__)
-	#define XALogWeavingIf(condition, ...) if ((condition)) printf(__VA_ARGS__)
+	#define XALogWeavingIf(condition, ...) do{ if ((condition)) XALogWeaving(__VA_ARGS__); }while(0)
 #else // Do nothing; silence the message
 	#define XALogWeaving(...) do{}while(0)
 	#define XALogWeavingIf(condition, ...) do{}while(0)
 #endif
+// -----------------------------------------------------------------------------
+#if defined(XAspectLogWarning)
+	#define XALogWarning(...) do{ XAspectWarningCounts++; printf("**XAspect Warning (%lu): ", (unsigned long) XAspectWarningCounts); printf(__VA_ARGS__); }while(0)
+#else
+	#define XALogWarning(...) do{ XAspectWarningCounts++; }while(0)
+#endif
+#define XALogWarningIf(condition, ...) do{ if ((condition)) XALogWarning(__VA_ARGS__); }while(0)
 
 // -----------------------------------------------------------------------------
 // Symbol for class type

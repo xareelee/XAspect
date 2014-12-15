@@ -25,6 +25,9 @@
 		11A50D261A2B664C00E68EAD /* MultiTargetTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 11A50D251A2B664C00E68EAD /* MultiTargetTest.m */; };
 		11B890471A14481700FA68D0 /* Aspect-ObjectAllocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B890461A14481700FA68D0 /* Aspect-ObjectAllocation.m */; };
 		11B890491A1922B200FA68D0 /* NucleationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 11B890481A1922B200FA68D0 /* NucleationTest.m */; };
+		11C038331A3E846500B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C038321A3E846500B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m */; };
+		11C038341A3E847300B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C038321A3E846500B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m */; };
+		11C038361A3E92F300B84C10 /* DuplicatedAspectPatchesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C038351A3E92F300B84C10 /* DuplicatedAspectPatchesTest.m */; };
 		11C890BA19B02A37007D12B7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C890B919B02A37007D12B7 /* main.m */; };
 		11C890BD19B02A37007D12B7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C890BC19B02A37007D12B7 /* AppDelegate.m */; };
 		11C890C319B02A37007D12B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11C890C119B02A37007D12B7 /* Main.storyboard */; };
@@ -77,6 +80,8 @@
 		11A50D251A2B664C00E68EAD /* MultiTargetTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiTargetTest.m; sourceTree = "<group>"; };
 		11B890461A14481700FA68D0 /* Aspect-ObjectAllocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Aspect-ObjectAllocation.m"; sourceTree = "<group>"; };
 		11B890481A1922B200FA68D0 /* NucleationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NucleationTest.m; sourceTree = "<group>"; };
+		11C038321A3E846500B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m"; sourceTree = "<group>"; };
+		11C038351A3E92F300B84C10 /* DuplicatedAspectPatchesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuplicatedAspectPatchesTest.m; sourceTree = "<group>"; };
 		11C890B419B02A37007D12B7 /* XAspectDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XAspectDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C890B819B02A37007D12B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C890B919B02A37007D12B7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -170,6 +175,7 @@
 				11F954871A278EAF0046FB00 /* SafeCategoryTest.m */,
 				11F136821A31BAEB00385FAF /* CustomizedDefaultPatchTest.m */,
 				11A2FB8F1A358E1A0078CA99 /* CustomizedSupercalllerPatchTest.m */,
+				11C038351A3E92F300B84C10 /* DuplicatedAspectPatchesTest.m */,
 			);
 			name = "Fuctional Test";
 			sourceTree = "<group>";
@@ -177,6 +183,7 @@
 		11A2FB971A36D2A50078CA99 /* For Testing */ = {
 			isa = PBXGroup;
 			children = (
+				11C038321A3E846500B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m */,
 				11A50D1E1A2B654800E68EAD /* SharedClassBetweenTargets.h */,
 				11A50D1F1A2B654800E68EAD /* SharedClassBetweenTargets.m */,
 				11A50D221A2B659700E68EAD /* XAspect-TargetTestFromProduct.m */,
@@ -451,6 +458,7 @@
 				11A50D231A2B659700E68EAD /* XAspect-TargetTestFromProduct.m in Sources */,
 				11B890471A14481700FA68D0 /* Aspect-ObjectAllocation.m in Sources */,
 				11C890BD19B02A37007D12B7 /* AppDelegate.m in Sources */,
+				11C038331A3E846500B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m in Sources */,
 				11E246791A2CC75F00359C96 /* XAViewController.m in Sources */,
 				11F2EC2619C0422C000A7F48 /* Aspect-CocoaLumberjack.m in Sources */,
 				11C890BA19B02A37007D12B7 /* main.m in Sources */,
@@ -462,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11A2FB921A3693B60078CA99 /* MethodPrefixTest.m in Sources */,
+				11C038361A3E92F300B84C10 /* DuplicatedAspectPatchesTest.m in Sources */,
 				11A2FB941A369BBC0078CA99 /* NullReturnValueImpTest.m in Sources */,
 				1118D57A19D1DB86009CD14C /* Tier2.m in Sources */,
 				118DE9BA19D3BD58006A76B2 /* HierarchyTest.m in Sources */,
@@ -471,6 +480,7 @@
 				11A50D261A2B664C00E68EAD /* MultiTargetTest.m in Sources */,
 				1118D58419D1DBB3009CD14C /* Tier5.m in Sources */,
 				11C890D119B02A37007D12B7 /* BasicWeavingForTypesTest.m in Sources */,
+				11C038341A3E847300B84C10 /* Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m in Sources */,
 				11A50D1A1A2AAA8700E68EAD /* CExtensionTest.m in Sources */,
 				11F954881A278EAF0046FB00 /* SafeCategoryTest.m in Sources */,
 				110B1D071A2422A100295E78 /* SimpleMacroExpansionTest.m in Sources */,
