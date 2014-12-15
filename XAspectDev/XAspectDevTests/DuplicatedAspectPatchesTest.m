@@ -32,7 +32,7 @@
 				   @"The count should be equal to the number of aspect patches in Aspect-Foundation_UnicodifyingDescriptionsOfObjects.m due to shared implementation.");
 }
 
-- (void)testExample {
+- (void)testDuplicatedAspectPatches {
     // This is an example of a functional test case.
 	NSArray *array = @[@"如果你不愛我",
 					   @"我會讓你走",

@@ -17,6 +17,9 @@ Restrictions for Current Version
 Versions and Release Notes
 --------------------------
 
+### Version 1.0.3
+	
+ - Fix the aspect patch assertion failure problem. Shared aspect file between targets won't cause the assertion fails.
 
 ### Version 1.0.2
 
