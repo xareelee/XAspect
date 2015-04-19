@@ -3,7 +3,7 @@
 //  XAspectDev
 //
 //  Created by Xaree on 11/17/14.
-//  Copyright (c) 2014 Xaree Lee. All rights reserved.
+//  Copyright (c) 2015 Xaree Lee. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

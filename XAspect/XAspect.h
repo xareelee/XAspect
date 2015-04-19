@@ -1,7 +1,7 @@
 // <XAspect>
 // XAspect.h
 //
-// Copyright (c) 2014 Xaree Lee (Kang-Yu Lee)
+// Copyright (c) 2015 Xaree Lee (Kang-Yu Lee)
 // Released under the MIT license (see below)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy

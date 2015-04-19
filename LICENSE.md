@@ -1,4 +1,4 @@
-**Copyright (c) 2014 Kang-Yu Xaree Lee**
+**Copyright (c) 2015 Kang-Yu Xaree Lee**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
