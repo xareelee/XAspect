@@ -17,15 +17,15 @@
 #import "Tier5.h"
 
 typedef struct {
-	int a;
-	float b;
-	char *c;
+  int a;
+  float b;
+  char *c;
 } StructForTest;
 
 typedef union {
-	int i;
-	double j;
-	char *k;
+  int i;
+  double j;
+  char *k;
 } UnionForTest;
 
 
@@ -91,58 +91,58 @@ typedef union {
 @implementation NullReturnValueImpTest
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+  // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+  // Put teardown code here. This method is called after the invocation of each test method in the class.
+  [super tearDown];
 }
 
 - (void)testNullReturnValue
 {
-	// void
-	// We can't assert the return value fot type `void`, but we can test whether
-	// the implementation exists
-	[Tier1 nullReturnValueForType_void];
-	
-	XCTAssertEqual([Tier1 nullReturnValueForType_void_pointer], NULL);
-	
-	// Primitive
-	XCTAssertEqual([Tier1 nullReturnValueForType_int], 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_long], 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_float], 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_double], 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_unsigned_int], 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_unsigned_long], 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_char], NULL);
-	XCTAssertEqual([Tier1 nullReturnValueForType_const_char], NULL);
-	
-	// Object
-	XCTAssertEqualObjects([Tier1 nullReturnValueForType_id], nil);
-	XCTAssertEqualObjects([Tier1 nullReturnValueForType_instancetype], nil);
-	XCTAssertEqualObjects([Tier1 nullReturnValueForType_NSString], nil);
-	XCTAssertEqualObjects([Tier1 nullReturnValueForType_NSArray], nil);
-	
-	// Structure
-	XCTAssert(CGPointEqualToPoint([Tier1 nullReturnValueForType_CGPoint], CGPointZero));
-	XCTAssert(CGSizeEqualToSize([Tier1 nullReturnValueForType_CGSize], CGSizeZero));
-	XCTAssert(CGRectEqualToRect([Tier1 nullReturnValueForType_CGRect], CGRectZero));
-	XCTAssertEqual([Tier1 nullReturnValueForType_StructForTest].a, 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_StructForTest].b, 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_StructForTest].c, NULL);
-	
-	// Union
-	XCTAssertEqual([Tier1 nullReturnValueForType_UnionForTest].i, 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_UnionForTest].j, 0);
-	XCTAssertEqual([Tier1 nullReturnValueForType_UnionForTest].k, NULL);
-	UnionForTest aUnion = [Tier1 nullReturnValueForType_UnionForTest];
-	size_t elementISize = sizeof(aUnion.i);
-	size_t elementJSize = sizeof(aUnion.j);
-	size_t elementKSize = sizeof(aUnion.k);
-	size_t unionSize = MAX(MAX(elementISize, elementJSize), elementKSize);
-	XCTAssertEqual(unionSize, sizeof(UnionForTest));
+  // void
+  // We can't assert the return value fot type `void`, but we can test whether
+  // the implementation exists
+  [Tier1 nullReturnValueForType_void];
+  
+  XCTAssertEqual([Tier1 nullReturnValueForType_void_pointer], NULL);
+  
+  // Primitive
+  XCTAssertEqual([Tier1 nullReturnValueForType_int], 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_long], 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_float], 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_double], 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_unsigned_int], 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_unsigned_long], 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_char], NULL);
+  XCTAssertEqual([Tier1 nullReturnValueForType_const_char], NULL);
+  
+  // Object
+  XCTAssertEqualObjects([Tier1 nullReturnValueForType_id], nil);
+  XCTAssertEqualObjects([Tier1 nullReturnValueForType_instancetype], nil);
+  XCTAssertEqualObjects([Tier1 nullReturnValueForType_NSString], nil);
+  XCTAssertEqualObjects([Tier1 nullReturnValueForType_NSArray], nil);
+  
+  // Structure
+  XCTAssert(CGPointEqualToPoint([Tier1 nullReturnValueForType_CGPoint], CGPointZero));
+  XCTAssert(CGSizeEqualToSize([Tier1 nullReturnValueForType_CGSize], CGSizeZero));
+  XCTAssert(CGRectEqualToRect([Tier1 nullReturnValueForType_CGRect], CGRectZero));
+  XCTAssertEqual([Tier1 nullReturnValueForType_StructForTest].a, 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_StructForTest].b, 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_StructForTest].c, NULL);
+  
+  // Union
+  XCTAssertEqual([Tier1 nullReturnValueForType_UnionForTest].i, 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_UnionForTest].j, 0);
+  XCTAssertEqual([Tier1 nullReturnValueForType_UnionForTest].k, NULL);
+  UnionForTest aUnion = [Tier1 nullReturnValueForType_UnionForTest];
+  size_t elementISize = sizeof(aUnion.i);
+  size_t elementJSize = sizeof(aUnion.j);
+  size_t elementKSize = sizeof(aUnion.k);
+  size_t unionSize = MAX(MAX(elementISize, elementJSize), elementKSize);
+  XCTAssertEqual(unionSize, sizeof(UnionForTest));
 }
 
 @end

@@ -43,10 +43,10 @@ static NSInteger value_for_test1_tier5 = 5;
 
 @implementation Tier1 (HierarchyTests)
 + (NSInteger)valueForHierarchyTests_AspectPatchEveryTier{
-	return basic_value;
+  return basic_value;
 }
 + (NSInteger)valueForHierarchyTests_AspectPatchEvery2Tier{
-	return basic_value;
+  return basic_value;
 }
 @end
 
@@ -63,7 +63,7 @@ static NSInteger value_for_test1_tier5 = 5;
 #define AtAspectOfClass Tier1
 @classPatchField(Tier1)
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier){
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier1;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier1;
 }
 @end
 #undef AtAspectOfClass
@@ -73,10 +73,10 @@ AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier){
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForHierarchyTests_AspectPatchEveryTier);
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForHierarchyTests_AspectPatchEvery2Tier);
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier) {
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier2;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier2;
 }
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEvery2Tier) {
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEvery2Tier) + value_for_test1_tier2;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEvery2Tier) + value_for_test1_tier2;
 }
 @end
 #undef AtAspectOfClass
@@ -85,7 +85,7 @@ AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEvery2Tier) {
 @classPatchField(Tier3)
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForHierarchyTests_AspectPatchEveryTier);
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier) {
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier3;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier3;
 }
 @end
 #undef AtAspectOfClass
@@ -95,10 +95,10 @@ AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier) {
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForHierarchyTests_AspectPatchEveryTier);
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForHierarchyTests_AspectPatchEvery2Tier);
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier) {
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier4;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier4;
 }
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEvery2Tier) {
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEvery2Tier) + value_for_test1_tier4;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEvery2Tier) + value_for_test1_tier4;
 }
 @end
 #undef AtAspectOfClass
@@ -107,7 +107,7 @@ AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEvery2Tier) {
 @classPatchField(Tier5)
 @synthesizeNucleusPatch(SuperCaller, +, NSInteger, valueForHierarchyTests_AspectPatchEveryTier);
 AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier) {
-	return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier5;
+  return XAMessageForward(valueForHierarchyTests_AspectPatchEveryTier) + value_for_test1_tier5;
 }
 @end
 #undef AtAspectOfClass
@@ -126,57 +126,57 @@ AspectPatch(+, NSInteger, valueForHierarchyTests_AspectPatchEveryTier) {
 @implementation HierarchyTests
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+  // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+  // Put teardown code here. This method is called after the invocation of each test method in the class.
+  [super tearDown];
 }
 
 - (void)testAspectPatchForEveryOneTierThroughHierarchy
 {
-	// We added values to value_for_test1_tier1 for every tier
-	NSInteger valueForTier1 = basic_value + value_for_test1_tier1;
-	NSInteger valueForTier2 = basic_value + value_for_test1_tier1 + value_for_test1_tier2;
-	NSInteger valueForTier3 = basic_value + value_for_test1_tier1 + value_for_test1_tier2 + value_for_test1_tier3;
-	NSInteger valueForTier4 = basic_value + value_for_test1_tier1 + value_for_test1_tier2 + value_for_test1_tier3 + value_for_test1_tier4;
-	NSInteger valueForTier5 = basic_value + value_for_test1_tier1 + value_for_test1_tier2 + value_for_test1_tier3 + value_for_test1_tier4 + value_for_test1_tier5;
-	
-	XCTAssertEqual(valueForTier1, 101); // +1
-	XCTAssertEqual(valueForTier2, 103); // +2
-	XCTAssertEqual(valueForTier3, 106); // +3
-	XCTAssertEqual(valueForTier4, 110); // +4
-	XCTAssertEqual(valueForTier5, 115); // +5
-	
-	XCTAssertEqual([Tier1 valueForHierarchyTests_AspectPatchEveryTier], valueForTier1);
-	XCTAssertEqual([Tier2 valueForHierarchyTests_AspectPatchEveryTier], valueForTier2);
-	XCTAssertEqual([Tier3 valueForHierarchyTests_AspectPatchEveryTier], valueForTier3);
-	XCTAssertEqual([Tier4 valueForHierarchyTests_AspectPatchEveryTier], valueForTier4);
-	XCTAssertEqual([Tier5 valueForHierarchyTests_AspectPatchEveryTier], valueForTier5);
+  // We added values to value_for_test1_tier1 for every tier
+  NSInteger valueForTier1 = basic_value + value_for_test1_tier1;
+  NSInteger valueForTier2 = basic_value + value_for_test1_tier1 + value_for_test1_tier2;
+  NSInteger valueForTier3 = basic_value + value_for_test1_tier1 + value_for_test1_tier2 + value_for_test1_tier3;
+  NSInteger valueForTier4 = basic_value + value_for_test1_tier1 + value_for_test1_tier2 + value_for_test1_tier3 + value_for_test1_tier4;
+  NSInteger valueForTier5 = basic_value + value_for_test1_tier1 + value_for_test1_tier2 + value_for_test1_tier3 + value_for_test1_tier4 + value_for_test1_tier5;
+  
+  XCTAssertEqual(valueForTier1, 101); // +1
+  XCTAssertEqual(valueForTier2, 103); // +2
+  XCTAssertEqual(valueForTier3, 106); // +3
+  XCTAssertEqual(valueForTier4, 110); // +4
+  XCTAssertEqual(valueForTier5, 115); // +5
+  
+  XCTAssertEqual([Tier1 valueForHierarchyTests_AspectPatchEveryTier], valueForTier1);
+  XCTAssertEqual([Tier2 valueForHierarchyTests_AspectPatchEveryTier], valueForTier2);
+  XCTAssertEqual([Tier3 valueForHierarchyTests_AspectPatchEveryTier], valueForTier3);
+  XCTAssertEqual([Tier4 valueForHierarchyTests_AspectPatchEveryTier], valueForTier4);
+  XCTAssertEqual([Tier5 valueForHierarchyTests_AspectPatchEveryTier], valueForTier5);
 }
 
 - (void)testAspectPatchForEveryTwoTierThroughHierarchy
 {
-	// We added values to basic_value for every 2 tiers
-	NSInteger valueForTier1 = basic_value;
-	NSInteger valueForTier2 = basic_value + value_for_test1_tier2;
-	NSInteger valueForTier3 = basic_value + value_for_test1_tier2;
-	NSInteger valueForTier4 = basic_value + value_for_test1_tier2 + value_for_test1_tier4;
-	NSInteger valueForTier5 = basic_value + value_for_test1_tier2 + value_for_test1_tier4;
-	
-	XCTAssertEqual(valueForTier1, 100); // -
-	XCTAssertEqual(valueForTier2, 102); // +2
-	XCTAssertEqual(valueForTier3, 102); // -
-	XCTAssertEqual(valueForTier4, 106); // +4
-	XCTAssertEqual(valueForTier5, 106); // -
-	
-	XCTAssertEqual([Tier1 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier1);
-	XCTAssertEqual([Tier2 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier2);
-	XCTAssertEqual([Tier3 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier3);
-	XCTAssertEqual([Tier4 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier4);
-	XCTAssertEqual([Tier5 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier5);
+  // We added values to basic_value for every 2 tiers
+  NSInteger valueForTier1 = basic_value;
+  NSInteger valueForTier2 = basic_value + value_for_test1_tier2;
+  NSInteger valueForTier3 = basic_value + value_for_test1_tier2;
+  NSInteger valueForTier4 = basic_value + value_for_test1_tier2 + value_for_test1_tier4;
+  NSInteger valueForTier5 = basic_value + value_for_test1_tier2 + value_for_test1_tier4;
+  
+  XCTAssertEqual(valueForTier1, 100); // -
+  XCTAssertEqual(valueForTier2, 102); // +2
+  XCTAssertEqual(valueForTier3, 102); // -
+  XCTAssertEqual(valueForTier4, 106); // +4
+  XCTAssertEqual(valueForTier5, 106); // -
+  
+  XCTAssertEqual([Tier1 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier1);
+  XCTAssertEqual([Tier2 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier2);
+  XCTAssertEqual([Tier3 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier3);
+  XCTAssertEqual([Tier4 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier4);
+  XCTAssertEqual([Tier5 valueForHierarchyTests_AspectPatchEvery2Tier], valueForTier5);
 }
 
 

@@ -41,9 +41,9 @@ typedef void * VoidPointer;
 typedef NSInteger AutoNucleationType ;
 
 typedef union {
-	AutoNucleationType Default;
-	AutoNucleationType SuperCaller;
-//	AutoNucleationType DefaultAndSuperCaller; // No need
+  AutoNucleationType Default;
+  AutoNucleationType SuperCaller;
+  //	AutoNucleationType DefaultAndSuperCaller; // No need
 } XAutocompletionTypeHelper;
 
 // For Auto completion.

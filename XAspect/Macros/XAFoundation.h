@@ -29,7 +29,7 @@
 
 // Raise a compilation error
 #if !defined(NSINTEGER_DEFINED) || !defined(NSIntegerMax) || !defined(NSIntegerMin) || !defined(NSUIntegerMax) || !defined(LONG_MAX) || !defined(LONG_MIN) || !defined(ULONG_MAX)
-	#error NS integer types not defined! Please import the NSObjCRuntime.h.
+#error NS integer types not defined! Please import the NSObjCRuntime.h.
 #endif
 
 // -----------------------------------------------------------------------------

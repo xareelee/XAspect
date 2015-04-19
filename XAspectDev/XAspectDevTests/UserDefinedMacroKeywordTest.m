@@ -114,43 +114,43 @@ BOOL _isUndefinedAtAspectOfClassDetected = NO;
 @implementation UserDefinedMacroKeywordTest
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+  // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+  // Put teardown code here. This method is called after the invocation of each test method in the class.
+  [super tearDown];
 }
 
 - (void)testIsDefinedAtAspectDetected {
-	XCTAssert(_isDefinedAtAspectDetected,
-			  "The `@classPatchField()` should detect the defined `AtAspect`.");
+  XCTAssert(_isDefinedAtAspectDetected,
+            "The `@classPatchField()` should detect the defined `AtAspect`.");
 }
 
 - (void)testIsBlankAtAspectDetected {
-	XCTAssert(_isBlankAtAspectDetected,
-			  "The `@classPatchField()` should detect the blank `AtAspect`.");
+  XCTAssert(_isBlankAtAspectDetected,
+            "The `@classPatchField()` should detect the blank `AtAspect`.");
 }
 
 - (void)testIsUndefinedAtAspectDetected {
-	XCTAssert(_isUndefinedAtAspectDetected,
-			  "The `@classPatchField()` should detect the undefined `AtAspect`.");
+  XCTAssert(_isUndefinedAtAspectDetected,
+            "The `@classPatchField()` should detect the undefined `AtAspect`.");
 }
 
 - (void)testIsDefinedAtAspectOfClassDetected {
-	XCTAssert(_isDefinedAtAspectOfClassDetected,
-			  "The `@classPatchField()` should detect the defined `AtAspectOfClass`.");
+  XCTAssert(_isDefinedAtAspectOfClassDetected,
+            "The `@classPatchField()` should detect the defined `AtAspectOfClass`.");
 }
 
 - (void)testIsBlankAtAspectOfClassDetected {
-	XCTAssert(_isBlankAtAspectOfClassDetected,
-			  "The `@classPatchField()` should detect the blank `AtAspectOfClass`.");
+  XCTAssert(_isBlankAtAspectOfClassDetected,
+            "The `@classPatchField()` should detect the blank `AtAspectOfClass`.");
 }
 
 - (void)testIsUndefinedAtAspectOfClassDetected {
-	XCTAssert(_isUndefinedAtAspectOfClassDetected,
-			  "The `@classPatchField()` should detect the undefined `AtAspectOfClass`.");
+  XCTAssert(_isUndefinedAtAspectOfClassDetected,
+            "The `@classPatchField()` should detect the undefined `AtAspectOfClass`.");
 }
 
 

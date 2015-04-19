@@ -60,12 +60,12 @@ static IMP nullImplementation_5_IMP;
 @implementation Tier1 (HierarchyTests)
 + (void)load
 {
-	// Cache the original implementation before weaving (method swizzling)
-	nullImplementation_1_IMP = classImp([self class], @selector(nullImplementation_1));
-	nullImplementation_2_IMP = classImp([self class], @selector(nullImplementation_2));
-	nullImplementation_3_IMP = classImp([self class], @selector(nullImplementation_3));
-	nullImplementation_4_IMP = classImp([self class], @selector(nullImplementation_4));
-	nullImplementation_5_IMP = classImp([self class], @selector(nullImplementation_5));
+  // Cache the original implementation before weaving (method swizzling)
+  nullImplementation_1_IMP = classImp([self class], @selector(nullImplementation_1));
+  nullImplementation_2_IMP = classImp([self class], @selector(nullImplementation_2));
+  nullImplementation_3_IMP = classImp([self class], @selector(nullImplementation_3));
+  nullImplementation_4_IMP = classImp([self class], @selector(nullImplementation_4));
+  nullImplementation_5_IMP = classImp([self class], @selector(nullImplementation_5));
 }
 @end
 
@@ -84,7 +84,7 @@ static IMP nullImplementation_5_IMP;
 @synthesizeNucleusPatch(SuperCaller, +, id, nullImplementation_5);
 
 AspectPatch(+, id, nullImplementation_5) {
-	return @([XAMessageForward(nullImplementation_5) integerValue] + 13);
+  return @([XAMessageForward(nullImplementation_5) integerValue] + 13);
 }
 @end
 #undef AtAspectOfClass
@@ -97,16 +97,16 @@ AspectPatch(+, id, nullImplementation_5) {
 @synthesizeNucleusPatch(Default, +, id, nullImplementation_5);
 
 AspectPatch(+, id, nullImplementation_2) {
-	return XAMessageForward(nullImplementation_2);
+  return XAMessageForward(nullImplementation_2);
 }
 AspectPatch(+, id, nullImplementation_3) {
-	return @([XAMessageForward(nullImplementation_3) integerValue] + 5);
+  return @([XAMessageForward(nullImplementation_3) integerValue] + 5);
 }
 AspectPatch(+, id, nullImplementation_4) {
-	return @([XAMessageForward(nullImplementation_4) integerValue] + 7);
+  return @([XAMessageForward(nullImplementation_4) integerValue] + 7);
 }
 AspectPatch(+, id, nullImplementation_5) {
-	return @([XAMessageForward(nullImplementation_5) integerValue] + 11);
+  return @([XAMessageForward(nullImplementation_5) integerValue] + 11);
 }
 @end
 #undef AtAspectOfClass
@@ -115,7 +115,7 @@ AspectPatch(+, id, nullImplementation_5) {
 @classPatchField(Tier3)
 @synthesizeNucleusPatch(SuperCaller, +, id, nullImplementation_4);
 AspectPatch(+, id, nullImplementation_4) {
-	return @([XAMessageForward(nullImplementation_4) integerValue] + 8);
+  return @([XAMessageForward(nullImplementation_4) integerValue] + 8);
 }
 @end
 #undef AtAspectOfClass
@@ -133,171 +133,171 @@ AspectPatch(+, id, nullImplementation_4) {
 @implementation NucleationTest
 
 - (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+  [super setUp];
+  // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+  // Put teardown code here. This method is called after the invocation of each test method in the class.
+  [super tearDown];
 }
 
 #pragma mark Test Nucleation
 // Test 1: There is no implemention without nucleation (nullImplementation_1).
 - (void)testNullNuleation
 {
-	SEL cmd = @selector(nullImplementation_1);
-	IMP currentImp = classImp([Tier1 class], cmd);
-	
-	// Both original and current implementations are nil.
-	XCTAssert(!currentImp,
-			  @"The current implementation should be nil.");
-	XCTAssert(!nullImplementation_2_IMP,
-			  @"The original implementation should be nil.");
-	
-	// Invoking nullImplementation_1 through the hierarchy should throw an exception (unrecognized selector).
-	XCTAssertThrows([Tier1 nullImplementation_1], @"It should throw an exception");
-	XCTAssertThrows([Tier2 nullImplementation_1], @"It should throw an exception");
-	XCTAssertThrows([Tier3 nullImplementation_1], @"It should throw an exception");
-	XCTAssertThrows([Tier4 nullImplementation_1], @"It should throw an exception");
-	XCTAssertThrows([Tier5 nullImplementation_1], @"It should throw an exception");
+  SEL cmd = @selector(nullImplementation_1);
+  IMP currentImp = classImp([Tier1 class], cmd);
+  
+  // Both original and current implementations are nil.
+  XCTAssert(!currentImp,
+            @"The current implementation should be nil.");
+  XCTAssert(!nullImplementation_2_IMP,
+            @"The original implementation should be nil.");
+  
+  // Invoking nullImplementation_1 through the hierarchy should throw an exception (unrecognized selector).
+  XCTAssertThrows([Tier1 nullImplementation_1], @"It should throw an exception");
+  XCTAssertThrows([Tier2 nullImplementation_1], @"It should throw an exception");
+  XCTAssertThrows([Tier3 nullImplementation_1], @"It should throw an exception");
+  XCTAssertThrows([Tier4 nullImplementation_1], @"It should throw an exception");
+  XCTAssertThrows([Tier5 nullImplementation_1], @"It should throw an exception");
 }
 
 // Test 2: We try to inject the default implementation (nullImplementation_2).
 - (void)testNuleationForTypeDefaultWithoutChangingReturnValue
 {
-	id sender = [Tier1 class];
-	SEL cmd = @selector(nullImplementation_2);
-	IMP currentImp = classImp([Tier1 class], cmd);
-	// Successful default implementation injection for current implementation.
-	XCTAssert(currentImp,
-			  @"The current implementation should not be nil.");
-	XCTAssert(!nullImplementation_2_IMP,
-			  @"The original implementation should be nil.");
-	
-	// The value of original implementation and current implementation.
-	NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
-	XCTAssertEqualObjects(currentRetVal, nil,
-						  @"The current value should be %@", nil);
-	XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_2],
-						  @"The values from implementation invocation and direct invoction should be the same.");
-	
-	// Recognized selector
-	XCTAssertNoThrow([Tier1 nullImplementation_2], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier2 nullImplementation_2], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier3 nullImplementation_2], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier4 nullImplementation_2], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier5 nullImplementation_2], @"It should not throw an exception");
-	
-	// Null return value
-	XCTAssertNil([Tier1 nullImplementation_2], @"The default Implementation should return nil.");
-	XCTAssertNil([Tier2 nullImplementation_2], @"The default Implementation should return nil.");
-	XCTAssertNil([Tier3 nullImplementation_2], @"The default Implementation should return nil.");
-	XCTAssertNil([Tier4 nullImplementation_2], @"The default Implementation should return nil.");
-	XCTAssertNil([Tier5 nullImplementation_2], @"The default Implementation should return nil.");
+  id sender = [Tier1 class];
+  SEL cmd = @selector(nullImplementation_2);
+  IMP currentImp = classImp([Tier1 class], cmd);
+  // Successful default implementation injection for current implementation.
+  XCTAssert(currentImp,
+            @"The current implementation should not be nil.");
+  XCTAssert(!nullImplementation_2_IMP,
+            @"The original implementation should be nil.");
+  
+  // The value of original implementation and current implementation.
+  NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
+  XCTAssertEqualObjects(currentRetVal, nil,
+                        @"The current value should be %@", nil);
+  XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_2],
+                        @"The values from implementation invocation and direct invoction should be the same.");
+  
+  // Recognized selector
+  XCTAssertNoThrow([Tier1 nullImplementation_2], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier2 nullImplementation_2], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier3 nullImplementation_2], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier4 nullImplementation_2], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier5 nullImplementation_2], @"It should not throw an exception");
+  
+  // Null return value
+  XCTAssertNil([Tier1 nullImplementation_2], @"The default Implementation should return nil.");
+  XCTAssertNil([Tier2 nullImplementation_2], @"The default Implementation should return nil.");
+  XCTAssertNil([Tier3 nullImplementation_2], @"The default Implementation should return nil.");
+  XCTAssertNil([Tier4 nullImplementation_2], @"The default Implementation should return nil.");
+  XCTAssertNil([Tier5 nullImplementation_2], @"The default Implementation should return nil.");
 }
 
 // Test 3: We try to inject the default implementation and modify the return value (nullImplementation_3).
 - (void)testNuleationForTypeDefaultWithChangingReturnValue
 {
-	id sender = [Tier1 class];
-	SEL cmd = @selector(nullImplementation_3);
-	IMP currentImp = classImp([Tier1 class], cmd);
-	// Successful default implementation injection for current implementation.
-	XCTAssert(currentImp,
-			  @"The current implementation should not be nil.");
-	XCTAssert(!nullImplementation_3_IMP,
-			  @"The original implementation should be nil.");
-	
-	// The value of original implementation and current implementation.
-	NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
-	XCTAssertEqualObjects(currentRetVal, @5,
-						  @"The current value should be %@", @5);
-	XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_3],
-						  @"The values from implementation invocation and direct invoction should be the same.");
-	
-	// Recognized selector
-	XCTAssertNoThrow([Tier1 nullImplementation_3], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier2 nullImplementation_3], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier3 nullImplementation_3], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier4 nullImplementation_3], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier5 nullImplementation_3], @"It should not throw an exception");
-	
-	// Modified return value
-	XCTAssertEqualObjects([Tier1 nullImplementation_3], @5);
-	XCTAssertEqualObjects([Tier2 nullImplementation_3], @5);
-	XCTAssertEqualObjects([Tier3 nullImplementation_3], @5);
-	XCTAssertEqualObjects([Tier4 nullImplementation_3], @5);
-	XCTAssertEqualObjects([Tier5 nullImplementation_3], @5);
+  id sender = [Tier1 class];
+  SEL cmd = @selector(nullImplementation_3);
+  IMP currentImp = classImp([Tier1 class], cmd);
+  // Successful default implementation injection for current implementation.
+  XCTAssert(currentImp,
+            @"The current implementation should not be nil.");
+  XCTAssert(!nullImplementation_3_IMP,
+            @"The original implementation should be nil.");
+  
+  // The value of original implementation and current implementation.
+  NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
+  XCTAssertEqualObjects(currentRetVal, @5,
+                        @"The current value should be %@", @5);
+  XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_3],
+                        @"The values from implementation invocation and direct invoction should be the same.");
+  
+  // Recognized selector
+  XCTAssertNoThrow([Tier1 nullImplementation_3], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier2 nullImplementation_3], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier3 nullImplementation_3], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier4 nullImplementation_3], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier5 nullImplementation_3], @"It should not throw an exception");
+  
+  // Modified return value
+  XCTAssertEqualObjects([Tier1 nullImplementation_3], @5);
+  XCTAssertEqualObjects([Tier2 nullImplementation_3], @5);
+  XCTAssertEqualObjects([Tier3 nullImplementation_3], @5);
+  XCTAssertEqualObjects([Tier4 nullImplementation_3], @5);
+  XCTAssertEqualObjects([Tier5 nullImplementation_3], @5);
 }
 
 // Test 4: We try to inject an super caller implementation at tier 3 to modify the return value (nullImplementation_4).
 - (void)testNuleationForTypeDefaultFollowedBySuperCallerInjection
 {
-	id sender = [Tier1 class];
-	SEL cmd = @selector(nullImplementation_4);
-	IMP currentImp = classImp([Tier1 class], cmd);
-	// Successful default implementation injection for current implementation.
-	XCTAssert(currentImp,
-			  @"The current implementation should not be nil.");
-	XCTAssert(!nullImplementation_4_IMP,
-			  @"The original implementation should be nil.");
-	
-	// The value of original implementation and current implementation.
-	NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
-	XCTAssertEqualObjects(currentRetVal, @7,
-						  @"The current value should be %@", @7);
-	XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_4],
-						  @"The values from implementation invocation and direct invoction should be the same.");
-	
-	// Recognized selector
-	XCTAssertNoThrow([Tier1 nullImplementation_4], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier2 nullImplementation_4], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier3 nullImplementation_4], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier4 nullImplementation_4], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier5 nullImplementation_4], @"It should not throw an exception");
-	
-	// Modified return value
-	XCTAssertEqualObjects([Tier1 nullImplementation_4], @7);
-	XCTAssertEqualObjects([Tier2 nullImplementation_4], @7);
-	XCTAssertEqualObjects([Tier3 nullImplementation_4], @15);
-	XCTAssertEqualObjects([Tier4 nullImplementation_4], @15);
-	XCTAssertEqualObjects([Tier5 nullImplementation_4], @15);
+  id sender = [Tier1 class];
+  SEL cmd = @selector(nullImplementation_4);
+  IMP currentImp = classImp([Tier1 class], cmd);
+  // Successful default implementation injection for current implementation.
+  XCTAssert(currentImp,
+            @"The current implementation should not be nil.");
+  XCTAssert(!nullImplementation_4_IMP,
+            @"The original implementation should be nil.");
+  
+  // The value of original implementation and current implementation.
+  NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
+  XCTAssertEqualObjects(currentRetVal, @7,
+                        @"The current value should be %@", @7);
+  XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_4],
+                        @"The values from implementation invocation and direct invoction should be the same.");
+  
+  // Recognized selector
+  XCTAssertNoThrow([Tier1 nullImplementation_4], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier2 nullImplementation_4], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier3 nullImplementation_4], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier4 nullImplementation_4], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier5 nullImplementation_4], @"It should not throw an exception");
+  
+  // Modified return value
+  XCTAssertEqualObjects([Tier1 nullImplementation_4], @7);
+  XCTAssertEqualObjects([Tier2 nullImplementation_4], @7);
+  XCTAssertEqualObjects([Tier3 nullImplementation_4], @15);
+  XCTAssertEqualObjects([Tier4 nullImplementation_4], @15);
+  XCTAssertEqualObjects([Tier5 nullImplementation_4], @15);
 }
 
 // Test 5: The loading sequence should not influence the weaving sequence and
 // results. XAspect should always weave its superclass first.
 - (void)testWeavingSequenceForNuleation
 {
-	id sender = [Tier1 class];
-	SEL cmd = @selector(nullImplementation_5);
-	IMP currentImp = classImp([Tier1 class], cmd);
-	// Successful default implementation injection for current implementation.
-	XCTAssert(currentImp,
-			  @"The current implementation should not be nil.");
-	XCTAssert(!nullImplementation_5_IMP,
-			  @"The original implementation should be nil.");
-	
-	// The value of original implementation and current implementation.
-	NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
-	XCTAssertEqualObjects(currentRetVal, @11,
-						  @"The current value should be %@", @11);
-	XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_5],
-						  @"The values from implementation invocation and direct invoction should be the same.");
-	
-	// Recognized selector
-	XCTAssertNoThrow([Tier1 nullImplementation_5], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier2 nullImplementation_5], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier3 nullImplementation_5], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier4 nullImplementation_5], @"It should not throw an exception");
-	XCTAssertNoThrow([Tier5 nullImplementation_5], @"It should not throw an exception");
-
-	// Modified return value
-	XCTAssertEqualObjects([Tier1 nullImplementation_5], @11);
-	XCTAssertEqualObjects([Tier2 nullImplementation_5], @11);
-	XCTAssertEqualObjects([Tier3 nullImplementation_5], @11);
-	XCTAssertEqualObjects([Tier4 nullImplementation_5], @24);
-	XCTAssertEqualObjects([Tier5 nullImplementation_5], @24);
+  id sender = [Tier1 class];
+  SEL cmd = @selector(nullImplementation_5);
+  IMP currentImp = classImp([Tier1 class], cmd);
+  // Successful default implementation injection for current implementation.
+  XCTAssert(currentImp,
+            @"The current implementation should not be nil.");
+  XCTAssert(!nullImplementation_5_IMP,
+            @"The original implementation should be nil.");
+  
+  // The value of original implementation and current implementation.
+  NSNumber *currentRetVal = (NSNumber *)((id(*)(id,SEL))currentImp)(sender, cmd);
+  XCTAssertEqualObjects(currentRetVal, @11,
+                        @"The current value should be %@", @11);
+  XCTAssertEqualObjects(currentRetVal, [Tier1 nullImplementation_5],
+                        @"The values from implementation invocation and direct invoction should be the same.");
+  
+  // Recognized selector
+  XCTAssertNoThrow([Tier1 nullImplementation_5], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier2 nullImplementation_5], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier3 nullImplementation_5], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier4 nullImplementation_5], @"It should not throw an exception");
+  XCTAssertNoThrow([Tier5 nullImplementation_5], @"It should not throw an exception");
+  
+  // Modified return value
+  XCTAssertEqualObjects([Tier1 nullImplementation_5], @11);
+  XCTAssertEqualObjects([Tier2 nullImplementation_5], @11);
+  XCTAssertEqualObjects([Tier3 nullImplementation_5], @11);
+  XCTAssertEqualObjects([Tier4 nullImplementation_5], @24);
+  XCTAssertEqualObjects([Tier5 nullImplementation_5], @24);
 }
 
 

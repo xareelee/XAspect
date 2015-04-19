@@ -16,8 +16,8 @@ IMP instanceImp(Class cls, SEL sel);
  We test macro expansion results here.
  */
 #define XCTAssertMacro(macroA, expandedResultsString, ...) \
-	XCTAssertCString(metamacro_stringify(macroA), expandedResultsString, ## __VA_ARGS__)
+  XCTAssertCString(metamacro_stringify(macroA), expandedResultsString, ## __VA_ARGS__)
 #define XCTAssertCString(strA, strB, ...) \
-	XCTAssert(strcmp(strA, strB) == 0, ## __VA_ARGS__)
+  XCTAssert(strcmp(strA, strB) == 0, ## __VA_ARGS__)
 #define XCTAssertCStringNotEqual(strA, strB, ...) \
-	XCTAssert(strcmp(strA, strB) != 0, ## __VA_ARGS__)
+  XCTAssert(strcmp(strA, strB) != 0, ## __VA_ARGS__)

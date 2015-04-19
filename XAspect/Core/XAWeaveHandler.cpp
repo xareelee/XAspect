@@ -38,13 +38,13 @@ NSUInteger XAspectWarningCounts;
 
 // An API for calling C++ method to parse the patches.
 void _XAspect_build_patches(Class aspectMethodSourceClass, Class targetClass, const char *aspectName) {
-	XAsepct::CrystallizationManager::sharedInstance()->constructPatchBuild(aspectMethodSourceClass, targetClass, aspectName);
+  XAsepct::CrystallizationManager::sharedInstance()->constructPatchBuild(aspectMethodSourceClass, targetClass, aspectName);
 }
 
 // A contructor. Automatically be invoked after program is loaded.
 __attribute__((constructor))
 static void crystallizeAllPatches(void) {
-	XAsepct::CrystallizationManager::sharedInstance()->crystallizeAllPatches();
+  XAsepct::CrystallizationManager::sharedInstance()->crystallizeAllPatches();
 }
 
 
