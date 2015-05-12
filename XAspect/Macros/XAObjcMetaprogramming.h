@@ -325,7 +325,9 @@
     @class NSObject // Force using semicolon to terminate this statement.
 #else
   #define synthesizeNucleusPatch(NucleationType, MethodSign, ReturnType, MethodBody) \
-    __Prototype_synthesizeNucleusPatch(NucleationType, AtAspectOfClass, MethodSign, ReturnType, MethodBody)
+    class NSObject; /* Force using `@` to start this statement. */\
+    __Prototype_synthesizeNucleusPatch(NucleationType, AtAspectOfClass, MethodSign, ReturnType, MethodBody)\
+    @class NSObject // Force using semicolon to terminate this statement.
 #endif
 
 #define __Prototype_synthesizeNucleusPatch(NucleationType, CLASS, MethodSign, ReturnType, MethodBody) \
@@ -349,7 +351,7 @@
     MethodSign (ReturnType) MethodBody;\
     @end @implementation _XAspect_Class_For_Aspect(CLASS, AtAspect) (_CategoryNameForAutoMethodCompletionForNucleation)
 #else
-  #define _AutoMethodCompletionForNucleation(CLASS, MethodSign, ReturnType, MethodBody)
+  #define _AutoMethodCompletionForNucleation(CLASS, MethodSign, ReturnType, MethodBody) // nullifying
 #endif
 
 #define _CategoryNameForAutoMethodCompletionForNucleation \
@@ -367,7 +369,7 @@
   #define _AutoCompleteNucleationType(TYPE, CLASS) __Prototype_AutoCompleteNucleationType(TYPE, CLASS, AtAspect)
 #else
   #define _AutoCompleteNucleationType(TYPE, CLASS) // nullifying
-#endif // DEBUG
+#endif
 
 #define __Prototype_AutoCompleteNucleationType(TYPE, CLASS, ASPECT) \
   __Concrete_AutoCompleteNucleationType(TYPE, metamacro_concat(metamacro_concat(_AutoCompleteNucleationType_, _XAspect_Class_For_Aspect(CLASS, ASPECT)), __LINE__))
@@ -449,6 +451,7 @@
     MethodSign (ReturnType) _customizedDefaultPrefixMethodBody(Priority, MethodBody)
 #else
   #define __Concrete_tryCustomizeDefaultPatch(Priority, MethodSign, ReturnType, MethodBody) \
+    class NSObject; \
     MethodSign (ReturnType) _customizedDefaultPrefixMethodBody(Priority, MethodBody)
 #endif
 
@@ -500,6 +503,7 @@
     MethodSign (ReturnType) _customizedSupercallerPrefixMethodBody(Priority, MethodBody)
 #else
   #define __Concrete_tryCustomizeSupercallerPatch(Priority, MethodSign, ReturnType, MethodBody) \
+    class NSObject; \
     MethodSign (ReturnType) _customizedSupercallerPrefixMethodBody(Priority, MethodBody)
 #endif
 
