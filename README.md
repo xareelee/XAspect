@@ -76,7 +76,7 @@ Run the program. After the program has loaded, you'll see messages when any obje
 
 You could also add **before advice** to `-dealloc` to print the deallocated objects for specific classes. 
 
-```
+```objc
 #import <XAspect/XAspect.h>
 #import <UIKit/UIKit.h>
 
