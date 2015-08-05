@@ -74,6 +74,42 @@ Run the program. After the program has loaded, you'll see messages when any obje
  ...
 ```
 
+You could also add **before advice** to `-dealloc` to print the deallocated objects for specific classes. 
+
+```
+#import <XAspect/XAspect.h>
+#import <UIKit/UIKit.h>
+
+// -----------------------------------------------------------------------------
+#define AtAspect DeallocTracker
+// -----------------------------------------------------------------------------
+
+#define AtAspectOfClass NSObject
+@classPatchField(NSObject)
+
+AspectPatch(-, void, dealloc)
+{
+  static NSArray *klasses;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    // Add classes here which you want to track when they were deallocated.
+    klasses = @[[UITableView class],
+                [UITableViewController class],
+                ];
+  });
+
+  Class klass = [self class];
+  if ([klasses containsObject:klass]) {
+    NSLog(@"--%@ <%p> dealloc", NSStringFromClass(klass), self);
+  }
+  XAMessageForwardDirectly(dealloc);
+}
+
+@end
+#undef AtAspectOfClass
+```
+
+
 XAspect aims to separate aspect code from the source implementation, and inject them back when the program is loaded.
 
 For more information about XAspect, please read the [introduction][Introduction] and the [documentation][Documentation].
