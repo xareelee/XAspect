@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'XAspect'
-  s.version      = '1.0.4'
+  s.version      = '1.0.5'
   s.license      = 'MIT'
   s.summary      = 'Making code maintainable and reusable with aspect-oriented programming for Objective-C'
   s.homepage     = 'https://github.com/xareelee/XAspect'
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.7'
 
   s.library = 'c++'
-  s.xcconfig = {
+  s.pod_target_xcconfig = {
        'CLANG_CXX_LANGUAGE_STANDARD' => 'c++11',
        'CLANG_CXX_LIBRARY' => 'libc++'
   }
