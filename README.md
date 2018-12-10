@@ -1,6 +1,6 @@
 # XAspect
 
-XAspect is an Objective-C framework for [Aspect-Oriented Programming] to make your code more **reusable** and **maintainable**.
+XAspect is an Objective-C library for [Aspect-Oriented Programming] to make your code more **reusable** and **maintainable**.
 
 It provides macros and APIs for **binding your aspect implementation to the target Objective-C methods whether you have the source implementation or not, even to the Apple's SDK!**
 
